@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Expense Tracker</title>
   
-  <link class="fluid-icon" type="image/png" sizes="192x192" href="https://dl.dropboxusercontent.com/scl/fi/j18pzuzopw34yrk2aivt1/Icon_Expense_Tracker.png?rlkey=hesbb0vzsoq6131353x104var&raw=1">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://dl.dropboxusercontent.com/scl/fi/j18pzuzopw34yrk2aivt1/Icon_Expense_Tracker.png?rlkey=hesbb0vzsoq6131353x104var&raw=1">
   <link rel="apple-touch-icon" sizes="180x180" href="https://dl.dropboxusercontent.com/scl/fi/j18pzuzopw34yrk2aivt1/Icon_Expense_Tracker.png?rlkey=hesbb0vzsoq6131353x104var&raw=1">
 
   <meta name="apple-mobile-web-app-title" content="Expense Tracker">
@@ -41,7 +41,6 @@
   <div class="fixed inset-0 overflow-y-auto p-4 md:p-6 pb-32">
     <div class="max-w-7xl mx-auto space-y-6">
       
-      <!-- HEADER FIXED ZONE -->
       <div class="sticky top-0 z-50 bg-[#f8fafc] dark:bg-slate-900 -mx-4 md:-mx-6 px-4 md:px-6 pt-1 pb-4 transition-colors">
         <div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xs border border-slate-100 dark:border-slate-700/80 gap-4">
           <div class="flex items-center space-x-2">
@@ -81,10 +80,8 @@
         <span id="toastIcon">💡</span> <span id="toastMessage">Sistem Ready</span>
       </div>
 
-      <!-- Tab Dashboard -->
       <div id="tab-dashboard" class="tab-content active space-y-6">
         
-        <!-- Baris Metrik Atas -->
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 min-w-0">
           <div class="bg-white dark:bg-slate-800 p-3 sm:p-4 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex flex-col justify-between col-span-2 lg:col-span-1">
             <div class="flex justify-between items-start w-full">
@@ -144,7 +141,6 @@
           </div>
         </div>
 
-        <!-- User & Core Value Cards Row -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
@@ -170,7 +166,7 @@
           
           <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex flex-col justify-between">
             <div class="flex items-center space-x-2.5">
-              <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/50 flex items-center justify-center text-amber-500 text-xl shadow-xs border border-amber-200 dark:amber-900/50">🪙</div>
+              <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/50 flex items-center justify-center text-amber-500 text-xl shadow-xs border border-amber-200 dark:border-amber-900/50">🪙</div>
               <div>
                 <p class="text-[10px] font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Pengeluaran</p>
                 <h3 id="txtTotalSemua" class="text-base font-black text-slate-800 dark:text-white mt-0.5">Rp0</h3>
@@ -202,7 +198,6 @@
           </div>
         </div>
 
-        <!-- Bagian Grafik -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs">
             <h4 class="text-xs font-bold text-slate-600 dark:text-slate-400 mb-4 uppercase tracking-wider">Bagian Kontribusi Anggaran</h4>
@@ -243,7 +238,6 @@
         </div>
       </div>
 
-      <!-- Tab Perbandingan Komparatif -->
       <div id="tab-comparison" class="tab-content space-y-6">
         <div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs space-y-4">
           <h3 class="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-700 pb-2">📊 Analisis Komparatif Finansial</h3>
@@ -263,7 +257,6 @@
         </div>
       </div>
 
-      <!-- Tab Input & Kelola Transaksi (CRUD) -->
       <div id="tab-input" class="tab-content space-y-6">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs space-y-4">
@@ -338,11 +331,9 @@
         </div>
       </div>
 
-      <!-- Tab Pengaturan -->
       <div id="tab-budget" class="tab-content space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
           
-          <!-- Form Budget -->
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
             <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
               <span class="text-xl">💰</span>
@@ -360,7 +351,6 @@
             </button>
           </div>
 
-          <!-- Menu Tambah Metode Pembayaran -->
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
             <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
               <span class="text-xl">💳</span>
@@ -378,14 +368,13 @@
             </button>
           </div>
 
-          <!-- Menu Kelola Opsi Tahun (SUDAH TERPASANG ENGINE PENGHAPUS OTOMATIS) -->
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
             <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
               <span class="text-xl">📅</span>
               <h3 class="text-sm font-bold text-slate-800 dark:text-white">Kelola Opsi Tahun</h3>
             </div>
             <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">
-              Tambahkan atau hapus angka tahun kustom secara mandiri dari daftar menu filter utama di atas.
+              Tambahkan atau hapus opsi tahun dari Cloud Database. Menghapus menu tidak akan melenyapkan data transaksi lembar kerja Anda.
             </p>
             <div class="space-y-3">
               <div>
@@ -397,9 +386,8 @@
               </button>
             </div>
             
-            <!-- AREA STRUKTUR BARU: DAFTAR UNTUK MENGHAPUS TAHUN KUSTOM -->
             <div id="listTahunKustomContainer" class="pt-3 border-t border-slate-100 dark:border-slate-700 hidden">
-              <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1.5">Klik (✕) Untuk Hapus Tahun:</label>
+              <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1.5">Hapus Opsi Tahun dari Cloud:</label>
               <div id="listTahunKustom" class="flex flex-wrap gap-1.5"></div>
             </div>
           </div>
@@ -461,53 +449,44 @@
 
     function formatRupiah(angka) { return 'Rp' + new Intl.NumberFormat('id-ID').format(Math.round(angka)); }
 
-    // DITINGKATKAN: RENDER DAFTAR TAHUN SEKALIGUS MEMBUAT TOMBOL HAPUS TAHUN KUSTOM
-    function inisialisasiFilterTahun() {
-      const defaultYears = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
-      let customYears = JSON.parse(localStorage.getItem('customYears')) || [];
-      let allYears = Array.from(new Set([...defaultYears, ...customYears])).sort((a, b) => a - b);
-      
-      const sel = document.getElementById('filterTahun');
-      const currentVal = sel.value || new Date().getFullYear();
-      sel.innerHTML = '';
-      allYears.forEach(y => { sel.innerHTML += `<option value="${y}">${y}</option>`; });
-      sel.value = currentVal;
+    // STRUKTUR BARU: LOADING DATA TAHUN MENGGUNAKAN ENGINES CLOUD DATABASE (BUKAN LOCALSTORAGE)
+    function loadYears(callback) {
+      fetch(`${API_URL}?action=getYears`)
+        .then(res => res.json())
+        .then(data => {
+          const sel = document.getElementById('filterTahun');
+          const currentVal = sel.value || new Date().getFullYear();
+          sel.innerHTML = '';
+          
+          data.allYears.forEach(y => { sel.innerHTML += `<option value="${y}">${y}</option>`; });
+          
+          if (data.allYears.includes(parseInt(currentVal))) {
+            sel.value = currentVal;
+          } else {
+            sel.value = new Date().getFullYear();
+          }
 
-      // Cetak UI Badge Penghapus Tahun Kustom
-      const container = document.getElementById('listTahunKustomContainer');
-      const listDiv = document.getElementById('listTahunKustom');
-      if (customYears.length > 0) {
-        container.classList.remove('hidden');
-        listDiv.innerHTML = '';
-        customYears.sort((a,b) => a-b).forEach(y => {
-          listDiv.innerHTML += `
-            <span class="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-700/60 px-2 py-1 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600 shadow-xs">
-              ${y}
-              <button onclick="deleteManualYear(${y})" class="text-red-500 hover:text-red-700 ml-0.5 font-black cursor-pointer text-[11px]" title="Hapus Tahun ${y}">✕</button>
-            </span>
-          `;
-        });
-      } else {
-        container.classList.add('hidden');
-      }
-    }
-
-    // FUNGSI BARU: EKSEKUSI PENGHAPUSAN TAHUN KUSTOM DARI MEMORI BROWSER
-    function deleteManualYear(year) {
-      if(!confirm(`Apakah Anda yakin ingin menghapus tahun ${year} dari sistem?`)) return;
-      let customYears = JSON.parse(localStorage.getItem('customYears')) || [];
-      customYears = customYears.filter(y => y !== year);
-      localStorage.setItem('customYears', JSON.stringify(customYears));
-      
-      showToast(`Tahun ${year} sukses dihapus!`, "✅");
-      
-      const sel = document.getElementById('filterTahun');
-      if (parseInt(sel.value) === year) {
-        sel.value = new Date().getFullYear();
-      }
-      
-      inisialisasiFilterTahun();
-      loadDashboardData();
+          const container = document.getElementById('listTahunKustomContainer');
+          const listDiv = document.getElementById('listTahunKustom');
+          
+          if (data.customYears.length > 0) {
+            container.classList.remove('hidden');
+            listDiv.innerHTML = '';
+            data.customYears.sort((a,b) => a-b).forEach(y => {
+              listDiv.innerHTML += `
+                <span class="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-700/60 px-2 py-1 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600 shadow-xs">
+                  ${y}
+                  <button type="button" onclick="deleteManualYear(${y})" class="text-red-500 hover:text-red-700 ml-0.5 font-black cursor-pointer text-[11px]" title="Hapus Opsi Tahun ${y}">✕</button>
+                </span>
+              `;
+            });
+          } else {
+            container.classList.add('hidden');
+          }
+          
+          if(callback) callback();
+        })
+        .catch(err => console.error("Error loading cloud years:", err));
     }
 
     function saveManualYear() {
@@ -515,34 +494,58 @@
       if(!newYearStr) { showToast("Masukkan angka tahun valid!", "❌"); return; }
       const newYear = parseInt(newYearStr);
       
-      const defaultYears = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
-      let customYears = JSON.parse(localStorage.getItem('customYears')) || [];
+      fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'addYear', tahun: newYear })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if(res.success) {
+          showToast(res.message, "✅");
+          document.getElementById('inputTahunBaru').value = '';
+          loadYears(() => { loadDashboardData(); });
+        } else {
+          showToast(res.message, "❌");
+        }
+      })
+      .catch(err => showToast("Gagal menyimpan tahun", "❌"));
+    }
+
+    function deleteManualYear(year) {
+      if(!confirm(`Hapus opsi tahun ${year}? Menu filter akan disembunyikan, tetapi data transaksi Anda tetap utuh di Spreadsheet.`)) return;
       
-      if(defaultYears.includes(newYear) || customYears.includes(newYear)) {
-        showToast("Tahun tersebut sudah terdaftar!", "❌"); return;
-      }
-      
-      customYears.push(newYear);
-      localStorage.setItem('customYears', JSON.stringify(customYears));
-      showToast("Tahun baru sukses ditambahkan!", "✅");
-      document.getElementById('inputTahunBaru').value = '';
-      inisialisasiFilterTahun();
+      fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'deleteYear', tahun: year })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if(res.success) {
+          showToast(res.message, "✅");
+          loadYears(() => { loadDashboardData(); });
+        } else {
+          showToast(res.message, "❌");
+        }
+      })
+      .catch(err => showToast("Gagal menghapus tahun", "❌"));
     }
 
     window.onload = function() {
       updateDarkModeButton(document.documentElement.classList.contains('dark'));
-      inisialisasiFilterTahun(); 
       const currentDate = new Date();
       document.getElementById('filterBulan').value = currentDate.getMonth() + 1;
-      document.getElementById('filterTahun').value = currentDate.getFullYear();
       
-      loadDashboardData(); 
-      loadFormOptionsAndLogs(); 
+      // SINKRONISASI SEBELUM TAMPILAN DASHBOARD DI-LOAD
+      loadYears(() => {
+        loadDashboardData(); 
+        loadFormOptionsAndLogs(); 
+      });
     };
 
     function loadDashboardData() {
       const bln = document.getElementById('filterBulan').value;
       const thn = document.getElementById('filterTahun').value;
+      if(!thn) return; // Mencegah pemanggilan kosong sebelum data tahun siap
       
       fetch(`${API_URL}?action=getDashboardData&bulan=${bln}&tahun=${thn}`)
         .then(res => res.json())
