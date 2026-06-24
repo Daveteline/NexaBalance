@@ -17,10 +17,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700;900&display=swap" rel="stylesheet">
   
-  <style>
-    /* PERBAIKAN UTAMA: Menggunakan @custom-variant resmi Tailwind v4 agar mendukung toggle manual .dark class */
+  <style type="text/tailwindcss">
     @custom-variant dark (&:where(.dark, .dark *));
-    
+  </style>
+
+  <style>
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; transition: background-color 0.3s ease; }
     body { font-family: 'Inter', sans-serif; }
     .tab-content { display: none; }
