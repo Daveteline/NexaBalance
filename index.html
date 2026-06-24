@@ -18,13 +18,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700;900&display=swap" rel="stylesheet">
   
   <style>
+    /* SOLUSI UTAMA: Memaksa Tailwind v4 Mendukung Selector Class (.dark) untuk Pindah Mode Manual via Tombol */
+    @variant dark (&:where(.dark, .dark *));
+    
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; transition: background-color 0.3s ease; }
     body { font-family: 'Inter', sans-serif; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
   </style>
 
-  <!-- Script Instan untuk Mencegah Efek Flash Putih Saat Reload Halaman -->
   <script>
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
@@ -38,7 +40,6 @@
   <div class="fixed inset-0 overflow-y-auto p-4 md:p-6 pb-32">
     <div class="max-w-7xl mx-auto space-y-6">
       
-      <!-- HEADER FIXED ZONE: Menu Tetap Beku di Atas Saat Layar Digulir -->
       <div class="sticky top-0 z-50 bg-[#f8fafc] dark:bg-slate-900 -mx-4 md:-mx-6 px-4 md:px-6 pt-1 pb-4 transition-colors">
         <div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xs border border-slate-100 dark:border-slate-700/80 gap-4">
           <div class="flex items-center space-x-2">
@@ -50,7 +51,6 @@
           </div>
           
           <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto justify-end">
-            <!-- Tombol Pengaktif Fitur Dark Mode Premium -->
             <button onclick="toggleDarkMode()" id="btnDarkMode" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-600">
               🌙 Dark Mode
             </button>
@@ -83,10 +83,8 @@
         <span id="toastIcon">💡</span> <span id="toastMessage">Sistem Ready</span>
       </div>
 
-      <!-- Tab Dashboard -->
       <div id="tab-dashboard" class="tab-content active space-y-6">
         
-        <!-- Baris Metrik Atas -->
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 min-w-0">
           <div class="bg-white dark:bg-slate-800 p-3 sm:p-4 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex flex-col justify-between col-span-2 lg:col-span-1">
             <div class="flex justify-between items-start w-full">
@@ -126,7 +124,6 @@
           </div>
         </div>
 
-        <!-- User Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -167,48 +164,46 @@
           </div>
         </div>
 
-        <!-- Bagian Grafik -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs">
-            <h4 class="text-xs font-bold text-slate-600 dark:text-slate-400 mb-4 uppercase tracking-wider">Bagian Kontribusi Anggaran</h4>
+          <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs">
+            <h4 class="text-xs font-bold text-slate-600 mb-4 uppercase tracking-wider">Bagian Kontribusi Anggaran</h4>
             <div class="flex flex-col sm:flex-row justify-between items-center w-full gap-4">
               <div class="mx-auto sm:mx-0 w-full max-w-[144px] sm:max-w-[170px] md:max-w-[190px] aspect-square relative"><canvas id="chartKontribusi"></canvas></div>
-              <div id="rekapUserBox" class="space-y-3 bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-100 dark:border-slate-700 text-xs font-semibold w-full sm:max-w-[300px] md:max-w-[320px]">
-                <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-1.5">
+              <div id="rekapUserBox" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs font-semibold w-full sm:max-w-[300px] md:max-w-[320px]">
+                <div class="flex justify-between items-center border-b border-slate-200 pb-1.5">
                   <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span> Harley</span>
-                  <span id="txtInfoHarley" class="font-bold text-slate-800 dark:text-slate-200">0% (Rp0)</span>
+                  <span id="txtInfoHarley" class="font-bold text-slate-800">0% (Rp0)</span>
                 </div>
                 <div class="flex justify-between items-center">
                   <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-pink-500 inline-block"></span> Rachel</span>
-                  <span id="txtInfoRachel" class="font-bold text-slate-800 dark:text-slate-200">0% (Rp0)</span>
+                  <span id="txtInfoRachel" class="font-bold text-slate-800">0% (Rp0)</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs">
-            <h4 class="text-xs font-bold text-slate-600 dark:text-slate-400 mb-4 uppercase tracking-wider">Distribusi & Rekap Kategori</h4>
+          <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs">
+            <h4 class="text-xs font-bold text-slate-600 mb-4 uppercase tracking-wider">Distribusi & Rekap Kategori</h4>
             <div class="flex flex-col sm:flex-row justify-between items-center w-full gap-4">
               <div class="mx-auto sm:mx-0 w-full max-w-[144px] sm:max-w-[170px] md:max-w-[190px] aspect-square relative"><canvas id="chartKategori"></canvas></div>
-              <div class="border border-slate-100 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900/60 p-3 h-auto min-h-[144px] flex flex-col justify-start w-full sm:max-w-[300px] md:max-w-[320px]">
+              <div class="border border-slate-100 rounded-xl bg-slate-50 p-3 h-auto min-h-[144px] flex flex-col justify-start w-full sm:max-w-[300px] md:max-w-[320px]">
                 <table class="w-full text-left text-[11px]">
                   <thead>
-                    <tr class="text-slate-400 dark:text-slate-500 font-bold border-b border-slate-200 dark:border-slate-700 uppercase"><th class="pb-1.5">Kategori</th><th class="pb-1.5 text-right">Total Biaya</th></tr>
+                    <tr class="text-slate-400 font-bold border-b border-slate-200 uppercase"><th class="pb-1.5">Kategori</th><th class="pb-1.5 text-right">Total Biaya</th></tr>
                   </thead>
-                  <tbody id="tabelRekapKategori" class="text-slate-700 dark:text-slate-300 font-medium divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+                  <tbody id="tabelRekapKategori" class="text-slate-700 font-medium divide-y divide-slate-100"></tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs">
-          <h4 class="text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider text-center">Perbandingan Tren Mingguan (M1 - M5)</h4>
+        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs">
+          <h4 class="text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider text-center">Perbandingan Tren Mingguan (M1 - M5)</h4>
           <div class="h-44"><canvas id="chartMingguan"></canvas></div>
         </div>
       </div>
 
-      <!-- Tab Perbandingan Komparatif -->
       <div id="tab-comparison" class="tab-content space-y-6">
         <div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs space-y-4">
           <h3 class="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-700 pb-2">📊 Analisis Komparatif Finansial (Bulan Lalu vs Bulan Ini)</h3>
@@ -228,7 +223,6 @@
         </div>
       </div>
 
-      <!-- Tab Input & Kelola Transaksi (CRUD) -->
       <div id="tab-input" class="tab-content space-y-6">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs space-y-4">
@@ -298,9 +292,8 @@
         </div>
       </div>
 
-      <!-- Tab Set Budget -->
       <div id="tab-budget" class="tab-content space-y-6">
-        <div class="max-w-md mx-auto bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
+        <div class="max-w-md mx-auto bg-white p-6 rounded-2xl border border-slate-100 shadow-md space-y-4">
           <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
             <span class="text-xl">⚙️</span>
             <h3 class="text-sm font-bold text-slate-800 dark:text-white">Kalibrasi Anggaran Bulanan</h3>
@@ -352,8 +345,8 @@
       const toast = document.getElementById('toast');
       document.getElementById('toastMessage').innerText = msg;
       document.getElementById('toastIcon').innerText = icon;
-      toast.className = "fixed top-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold";
-      setTimeout(() => { toast.className = "fixed top-5 right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold"; }, 3000);
+      toast.className = "fixed top-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold";
+      setTimeout(() => { toast.className = "fixed top-5 right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold"; }, 3000);
     }
 
     function switchTab(tabName) {
@@ -427,7 +420,7 @@
       let sisaBudget = data.budget - data.totalPengeluaran;
       const lblSisaBudget = document.getElementById('txtSisaBudget');
       lblSisaBudget.innerText = formatRupiah(sisaBudget);
-      lblSisaBudget.className = sisaBudget < 0 ? "text-sm sm:text-base font-black text-red-600 dark:text-red-400 mt-0.5 tracking-tight" : "text-sm sm:text-base font-black text-emerald-600 dark:text-emerald-400 mt-0.5 tracking-tight";
+      lblSisaBudget.className = sisaBudget < 0 ? "text-sm sm:text-base font-black text-red-600 mt-0.5 tracking-tight" : "text-sm sm:text-base font-black text-emerald-600 mt-0.5 tracking-tight";
 
       let pctTerpakai = data.budget > 0 ? Math.round((data.totalPengeluaran / data.budget) * 100) : 0;
       document.getElementById('txtPersenTerpakai').innerText = `Terpakai: ${pctTerpakai}%`;
@@ -473,7 +466,7 @@
         });
       }
 
-      // REVISI METRIK KOMPARASI: FORMAT BARU DENGAN IKON MENJADI ↑, ↓, ═ DIKUTI NOMINAL LALU PERSEN
+      // METRIK KOMPARASI: FORMAT PRESTASI BARU: "↑/↓/═ [Nominal] ([Persen]%)"
       const tbodyComp = document.getElementById('tabelPerbandingan');
       tbodyComp.innerHTML = '';
       let allCategoriesSet = new Set([...Object.keys(data.kategori), ...Object.keys(data.kategoriBulanLalu || {})]);
@@ -527,7 +520,6 @@
       if(chartKategoriInstance) chartKategoriInstance.destroy();
       if(chartMingguanInstance) chartMingguanInstance.destroy();
 
-      // KONFIGURASI ADAPTIF INDEKS WARNA UNTUK DIAGRAM JIKA DARK MODE AKTIF
       const isDark = document.documentElement.classList.contains('dark');
       const textChartColor = isDark ? '#f1f5f9' : '#334155';
       const lineChartColor = isDark ? '#334155' : '#e2e8f0';
