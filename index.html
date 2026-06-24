@@ -461,7 +461,6 @@
 
     function formatRupiah(angka) { return 'Rp' + new Intl.NumberFormat('id-ID').format(Math.round(angka)); }
 
-    // RENDER UTILITY UNTUK DROPDOWN TAHUN CLOUD
     function renderYearsDropdown(yearsData) {
       const sel = document.getElementById('filterTahun');
       const currentVal = sel.value || new Date().getFullYear();
@@ -486,7 +485,6 @@
       } else { container.classList.add('hidden'); }
     }
 
-    // FUNGSI UTAMA: SINKRONISASI SATU PINTU (BATCH LOAD) SAAT APLIKASI DI-BUKA
     function initializeApplicationData(bln, thn) {
       fetch(`${API_URL}?action=getInitialData&bulan=${bln}&tahun=${thn}`)
         .then(res => res.json())
@@ -494,11 +492,9 @@
           renderYearsDropdown(data.years);
           document.getElementById('filterTahun').value = thn;
 
-          // Suntik Opsi Kategori Form
           const selKat = document.getElementById('inputKategori'); selKat.innerHTML = '';
           data.categories.forEach(k => { selKat.innerHTML += `<option value="${k}">${k}</option>`; });
 
-          // Suntik Opsi Metode Form
           const selMet = document.getElementById('inputMetode'); selMet.innerHTML = '';
           data.paymentMethods.forEach(m => { selMet.innerHTML += `<option value="${m}">${m}</option>`; });
 
@@ -506,7 +502,6 @@
           cetakTabelRiwayat(data.recentTransactions);
           renderDashboard(data.dashboard);
 
-          // HILANGKAN LOADING OVERLAY SECARA LEMBUT (FADE OUT)
           const loader = document.getElementById('loadingScreen');
           if (loader) {
             loader.classList.add('opacity-0');
@@ -560,7 +555,6 @@
       const currentYear = currentDate.getFullYear();
       document.getElementById('filterBulan').value = currentMonth;
       
-      // JALANKAN METODE SATU PINTU
       initializeApplicationData(currentMonth, currentYear);
     };
 
@@ -639,22 +633,25 @@
         else lblRataRataTren.innerHTML = `<span class="text-slate-400 font-bold">═ 0.0%</span>`;
       } else { lblRataRataTren.innerHTML = `<span class="text-blue-500 font-bold">↑ 100%</span>`; }
 
+      // REVISI 1A: MENGGANTI TEKS AKHIR MENJADI "dari bulan lalu" PADA TOTAL PENGELUARAN
       let lblTotalSemuaTren = document.getElementById('lblTotalSemuaTren');
       if (data.totalPengeluaranBulanLalu > 0) {
         let pctExpChange = ((data.totalPengeluaran - data.totalPengeluaranBulanLalu) / data.totalPengeluaranBulanLalu) * 100;
-        if (pctExpChange > 0) lblTotalSemuaTren.innerHTML = `<span class="text-red-500 font-bold">↑ ${pctExpChange.toFixed(1)}%</span> vs bln lalu`;
-        else if (pctExpChange < 0) lblTotalSemuaTren.innerHTML = `<span class="text-emerald-500 font-bold">↓ ${Math.abs(pctExpChange).toFixed(1)}%</span> vs bln lalu`;
-        else lblTotalSemuaTren.innerHTML = `<span class="text-slate-400 font-bold">═ 0.0%</span> vs bln lalu`;
-      } else { lblTotalSemuaTren.innerHTML = `<span class="text-blue-500 font-bold">↑ 100%</span> vs bln lalu`; }
+        if (pctExpChange > 0) lblTotalSemuaTren.innerHTML = `<span class="text-red-500 font-bold">↑ ${pctExpChange.toFixed(1)}%</span> dari bulan lalu`;
+        else if (pctExpChange < 0) lblTotalSemuaTren.innerHTML = `<span class="text-emerald-500 font-bold">↓ ${Math.abs(pctExpChange).toFixed(1)}%</span> dari bulan lalu`;
+        else lblTotalSemuaTren.innerHTML = `<span class="text-slate-400 font-bold">═ 0.0%</span> dari bulan lalu`;
+      } else { lblTotalSemuaTren.innerHTML = `<span class="text-blue-500 font-bold">↑ 100%</span> dari bulan lalu`; }
 
       document.getElementById('txtBanyakTx').innerText = `${data.totalTxBulanIni} Tx`;
+      
+      // REVISI 1B: MENGGANTI TEKS AKHIR MENJADI "dari bulan lalu" PADA BANYAK TRANSAKSI
       let lblBanyakTxTren = document.getElementById('lblBanyakTxTren');
       if (data.totalTxBulanLalu > 0) {
         let pctTxChange = ((data.totalTxBulanIni - data.totalTxBulanLalu) / data.totalTxBulanLalu) * 100;
-        if (pctTxChange > 0) lblBanyakTxTren.innerHTML = `<span class="text-red-500 font-bold">↑ ${pctTxChange.toFixed(1)}%</span> vs bln lalu`;
-        else if (pctTxChange < 0) lblBanyakTxTren.innerHTML = `<span class="text-emerald-500 font-bold">↓ ${Math.abs(pctTxChange).toFixed(1)}%</span> vs bln lalu`;
-        else lblBanyakTxTren.innerHTML = `<span class="text-slate-400 font-bold">═ 0.0%</span> vs bln lalu`;
-      } else { lblBanyakTxTren.innerHTML = `<span class="text-blue-500 font-bold">↑ 100%</span> vs bln lalu`; }
+        if (pctTxChange > 0) lblBanyakTxTren.innerHTML = `<span class="text-red-500 font-bold">↑ ${pctTxChange.toFixed(1)}%</span> dari bulan lalu`;
+        else if (pctTxChange < 0) lblBanyakTxTren.innerHTML = `<span class="text-emerald-500 font-bold">↓ ${Math.abs(pctTxChange).toFixed(1)}%</span> dari bulan lalu`;
+        else lblBanyakTxTren.innerHTML = `<span class="text-slate-400 font-bold">═ 0.0%</span> dari bulan lalu`;
+      } else { lblBanyakTxTren.innerHTML = `<span class="text-blue-500 font-bold">↑ 100%</span> dari bulan lalu`; }
 
       let sisaBudget = data.budget - data.totalPengeluaran;
       const lblSisaBudget = document.getElementById('txtSisaBudget');
@@ -686,7 +683,10 @@
 
       const tbodyRekap = document.getElementById('tabelRekapKategori');
       tbodyRekap.innerHTML = '';
-      let katKeys = Object.keys(data.kategori);
+      
+      // REVISI 2: MENGURUTKAN DAFTAR KATEGORI BERDASARKAN TOTAL PENGELUARAN TERBESAR
+      let katKeys = Object.keys(data.kategori).sort((a, b) => data.kategori[b] - data.kategori[a]);
+      
       if(katKeys.length === 0) {
         tbodyRekap.innerHTML = `<tr><td colspan="2" class="py-2 text-slate-400 text-center dark:text-slate-500">Belum ada data</td></tr>`;
       } else {
@@ -732,9 +732,11 @@
             textPerubahan = `↑ ${formatDiff} (100%)`;
             classStyle = "bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-100 dark:border-blue-900/50";
           }
+          
+          // REVISI 3: MENGHAPUS KATA "Net " PADA REKAP TABEL ANALISIS KOMPARATIF FINANSIAL
           tbodyComp.innerHTML += `
             <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-700/30 transition-colors">
-              <td class="p-3 font-bold text-slate-700 dark:text-slate-300">Net ${cat}</td>
+              <td class="p-3 font-bold text-slate-700 dark:text-slate-300">${cat}</td>
               <td class="p-3 text-right font-semibold text-slate-500 dark:text-slate-400">${formatRupiah(biayaLalu)}</td>
               <td class="p-3 text-right font-black text-slate-800 dark:text-white">${formatRupiah(biayaIni)}</td>
               <td class="p-3 text-center"><span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold ${classStyle}">${textPerubahan}</span></td>
@@ -822,6 +824,7 @@
 
     function clearFilterHistori() { document.getElementById('searchHistori').value = ''; document.getElementById('filterHistoriMulai').value = ''; document.getElementById('filterHistoriSelesai').value = ''; cetakTabelRiwayat(masterDataRiwayat); }
 
+    // RESET STATE & RE-POPULATE FORM
     function siapkanEdit(id, tanggal, user, kategori, jumlah, keterangan, metode) {
       editModeId = id;
       document.getElementById('judulForm').innerText = "✏️ Sunting Transaksi";
