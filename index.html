@@ -255,9 +255,7 @@
           <div class="h-44"><canvas id="chartMingguan"></canvas></div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- SEKSI BARU: BENTO GRID STATISTIK MIKRO BULANAN -->
-        <!-- ========================================== -->
+        <!-- BENTO GRID STATISTIK MIKRO BULANAN -->
         <div class="pt-2">
           <h4 class="text-xs font-bold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wider text-center lg:text-left">📊 Sorotan Statistik Bulan Ini (Bento Insights)</h4>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -313,11 +311,10 @@
         </div>
       </div>
 
-      <!-- Tab Perbandingan Komparatif (BARU: MULTI ANALYTICS DAN GEMINI BOX) -->
+      <!-- Tab Perbandingan Komparatif -->
       <div id="tab-comparison" class="tab-content space-y-6">
-        <!-- Grid Kartu Analisis Dinamis Atas -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Kartu 1: Ringkasan Arus Finansial (Main Scorecard) -->
+          <!-- Kartu 1: Ringkasan Arus Finansial -->
           <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex flex-col justify-between">
             <div>
               <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Ringkasan Arus Finansial</span>
@@ -349,13 +346,11 @@
 
         <!-- Side-by-Side Bar Chart & Tabel Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Grafik Batang Berdampingan -->
           <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs lg:col-span-2">
             <h4 class="text-xs font-bold text-slate-600 dark:text-slate-400 mb-4 uppercase tracking-wider text-center lg:text-left">📊 Perbandingan Alokasi Kategori (Bulan Lalu vs Bulan Ini)</h4>
             <div class="h-64"><canvas id="chartPerbandinganBar"></canvas></div>
           </div>
 
-          <!-- Tabel Perbandingan -->
           <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex flex-col justify-between">
             <div>
               <h3 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">📋 Tabel Rincian Data</h3>
@@ -525,7 +520,7 @@
     Chart.register(ChartDataLabels);
 
     // =========================================================
-    // KUNCI JEMBATAN API: MASUKKAN URL EXEC WEB APP GOOGLE APPS SCRIPT ANDA
+    // KUNCI JEMBATAN API: TEMPELKAN URL WEB APP GOOGLE APPS SCRIPT (/exec) LU DI SINI
     // =========================================================
     const API_URL = "https://script.google.com/macros/s/AKfycbzTTNELUIXfiBqWhxr8kzbf-lUYzmQ0n6in-RUz5MH3j9aIm4eo8W8KPjuRXsQq-oE1Pw/exec"; 
 
@@ -684,9 +679,6 @@
       });
     }
 
-    // =========================================================
-    // PARSING ENGINE DAN INTELLIGENT AI FETCHER
-    // =========================================================
     function triggerGeminiInsight(data) {
       const aiBox = document.getElementById('aiInsightBox');
       aiBox.innerHTML = `
@@ -711,7 +703,6 @@
     }
 
     function renderDashboard(data) {
-      // Setup text dashboard dasar
       document.getElementById('txtBudget').innerText = formatRupiah(data.budget);
       document.getElementById('inputSetBudget').value = data.budget;
       document.getElementById('txtHariIni').innerText = formatRupiah(data.totalHariIni);
@@ -723,7 +714,6 @@
       document.getElementById('txtBudgetTerpakai').innerText = formatRupiah(data.totalPengeluaran);
       document.getElementById('txtTotalSemua').innerText = formatRupiah(data.totalPengeluaran);
 
-      // Indikator Trend Atas
       let lblHariIniTren = document.getElementById('lblHariIniTren');
       if (data.totalHariIniBulanLalu > 0) {
         let pct = ((data.totalHariIni - data.totalHariIniBulanLalu) / data.totalHariIniBulanLalu) * 100;
@@ -748,7 +738,6 @@
         else lblRataRataTren.innerHTML = `<span class="text-slate-400 font-bold">═ 0.0%</span>`;
       } else { lblRataRataTren.innerHTML = `<span class="text-blue-500 font-bold">↑ 100%</span>`; }
 
-      // Kustomisasi "dari bulan lalu" pada Total Pengeluaran & Banyak Transaksi
       let lblTotalSemuaTren = document.getElementById('lblTotalSemuaTren');
       if (data.totalPengeluaranBulanLalu > 0) {
         let pctExpChange = ((data.totalPengeluaran - data.totalPengeluaranBulanLalu) / data.totalPengeluaranBulanLalu) * 100;
@@ -766,7 +755,6 @@
         else lblBanyakTxTren.innerHTML = `<span class="text-slate-400 font-bold">═ 0.0%</span> dari bulan lalu`;
       } else { lblBanyakTxTren.innerHTML = `<span class="text-blue-500 font-bold">↑ 100%</span> dari bulan lalu`; }
 
-      // Sisa Budget Progress Bar
       let sisaBudget = data.budget - data.totalPengeluaran;
       const lblSisaBudget = document.getElementById('txtSisaBudget');
       lblSisaBudget.innerText = formatRupiah(sisaBudget);
@@ -788,7 +776,6 @@
       document.getElementById('txtSelisih').innerText = formatRupiah(selisih);
       document.getElementById('lblSelisih').innerText = data.totalHarley > data.totalRachel ? "Harley lebih tinggi" : "Rachel lebih tinggi";
 
-      // Pengurutan Kategori Terbesar -> Terkecil
       const tbodyRekap = document.getElementById('tabelRekapKategori');
       tbodyRekap.innerHTML = '';
       let katKeys = Object.keys(data.kategori).sort((a, b) => data.kategori[b] - data.kategori[a]);
@@ -808,9 +795,7 @@
         });
       }
 
-      // ==========================================
       // ENGINE PERHITUNGAN BENTO INSIGHT (DASHBOARD)
-      // ==========================================
       const filterBln = parseInt(document.getElementById('filterBulan').value);
       const filterThn = parseInt(document.getElementById('filterTahun').value);
       let txFilterBulanIni = masterDataRiwayat.filter(t => {
@@ -818,7 +803,6 @@
         return (d.getMonth() + 1) === filterBln && d.getFullYear() === filterThn;
       });
 
-      // Bento 1: Kategori Terbesar
       if(katKeys.length > 0) {
         let maxKat = katKeys[0];
         let maxKatAmt = data.kategori[maxKat];
@@ -830,14 +814,11 @@
         document.getElementById('bentoKategoriAngka').innerText = "Rp0 (0%)";
       }
 
-      // Bento 2, 3, 4 Berbasis Log Riwayat Transaksi Bulan Berjalan
       if (txFilterBulanIni.length > 0) {
-        // Transaksi Tunggal Terbesar
         let maxTx = txFilterBulanIni.reduce((max, t) => t.jumlah > max.jumlah ? t : max, txFilterBulanIni[0]);
         document.getElementById('bentoTxAngka').innerText = formatRupiah(maxTx.jumlah);
         document.getElementById('bentoTxKet').innerText = maxTx.keterangan ? `${maxTx.kategori} (${maxTx.keterangan})` : maxTx.kategori;
 
-        // Hari Pengeluaran Terboros (Agregat)
         let akumulasiHari = {};
         txFilterBulanIni.forEach(t => { akumulasiHari[t.tanggal] = (akumulasiHari[t.tanggal] || 0) + t.jumlah; });
         let maxHariStr = Object.keys(akumulasiHari).reduce((max, h) => akumulasiHari[h] > akumulasiHari[max] ? h : max, Object.keys(akumulasiHari)[0]);
@@ -845,7 +826,6 @@
         document.getElementById('bentoHariTanggal').innerText = dObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long' });
         document.getElementById('bentoHariAngka').innerText = formatRupiah(akumulasiHari[maxHariStr]);
 
-        // Rerata per Tx
         let rerata = data.totalPengeluaran / txFilterBulanIni.length;
         document.getElementById('bentoRerataAngka').innerText = `${formatRupiah(rerata)} / Tx`;
       } else {
@@ -856,9 +836,7 @@
         document.getElementById('bentoRerataAngka').innerText = "Rp0";
       }
 
-      // ==========================================
       // CALCULATION ENGINE TAB PERBANDINGAN KOMPARATIF
-      // ==========================================
       document.getElementById('compMainTotal').innerText = formatRupiah(data.totalPengeluaran);
       let MoMChangeNominal = data.totalPengeluaran - data.totalPengeluaranBulanLalu;
       let MoMChangePct = data.totalPengeluaranBulanLalu > 0 ? (MoMChangeNominal / data.totalPengeluaranBulanLalu) * 100 : 0;
@@ -874,7 +852,6 @@
       descTextScorecard += `Selisih performa anggaran sisa saat ini tercatat berada di angka ${performaBudgetVariance >= 0 ? '+' : ''}${formatRupiah(performaBudgetVariance)} (${Math.abs(performaVariancePct).toFixed(1)}%).`;
       document.getElementById('compMainDesc').innerText = descTextScorecard;
 
-      // Render Tabel Komparasi Dan Deteksi Top Movers (Hapus Kata "Net ")
       const tbodyComp = document.getElementById('tabelPerbandingan');
       tbodyComp.innerHTML = '';
       let allCategoriesSet = new Set([...Object.keys(data.kategori), ...Object.keys(data.kategoriBulanLalu || {})]);
@@ -921,15 +898,12 @@
       document.getElementById('compTopNaik').innerHTML = topNaikKat !== "-" ? `📈 <b>Peningkatan Tertinggi:</b> Kategori <span class="font-bold text-red-500">${topNaikKat}</span> melambung sebesar +${formatRupiah(topNaikAmt)} (${topNaikPct.toFixed(1)}%).` : `📈 <b>Peningkatan Tertinggi:</b> Tidak ada pembengkakan pos.`;
       document.getElementById('compTopTurun').innerHTML = topTurunKat !== "-" ? `📉 <b>Penghematan Terbaik:</b> Kategori <span class="font-bold text-emerald-500">${topTurunKat}</span> berhasil ditekan sebesar -${formatRupiah(topTurunAmt)} (${topTurunPct.toFixed(1)}%).` : `📉 <b>Penghematan Terbaik:</b> Belum ada pos yang diturunkan.`;
 
-      // Kartu 3: Dinamika Kontribusi Finansial Bulanan User MoM
       let hChange = data.totalHarleyBulanLalu > 0 ? ((data.totalHarley - data.totalHarleyBulanLalu) / data.totalHarleyBulanLalu) * 100 : 0;
       let rChange = data.totalRachelBulanLalu > 0 ? ((data.totalRachel - data.totalRachelBulanLalu) / data.totalRachelBulanLalu) * 100 : 0;
       document.getElementById('compUserH').innerHTML = `${formatRupiah(data.totalHarley)} <span class="${hChange >= 0 ? 'text-red-500' : 'text-emerald-500'} font-bold">${hChange >= 0 ? '↑' : '↓'} ${Math.abs(hChange).toFixed(1)}%</span>`;
       document.getElementById('compUserR').innerHTML = `${formatRupiah(data.totalRachel)} <span class="${rChange >= 0 ? 'text-red-500' : 'text-emerald-500'} font-bold">${rChange >= 0 ? '↑' : '↓'} ${Math.abs(rChange).toFixed(1)}%</span>`;
 
       updateCharts(data, pctH, pctR, allCategoriesSet);
-      
-      // TRIGGER EKSEKUSI PEMBENTUKAN NARASI ORGANIK GEMINI AI ASLI
       triggerGeminiInsight(data);
     }
 
@@ -963,7 +937,6 @@
         options: { responsive: true, maintainAspectRatio: false, plugins: { datalabels: { display: false }, legend: { labels: { color: textChartColor } } }, scales: { x: { grid: { color: lineChartColor }, ticks: { color: textChartColor } }, y: { grid: { color: lineChartColor }, ticks: { color: textChartColor } } } }
       });
 
-      // INITIALIZE BAR CHART SINKRONISASI BERDAMPINGAN (SIDE-BY-SIDE CHART)
       let compLabels = Array.from(allCategoriesSet);
       let datasetLalu = compLabels.map(cat => (data.kategoriBulanLalu && data.kategoriBulanLalu[cat]) ? data.kategoriBulanLalu[cat] : 0);
       let datasetIni = compLabels.map(cat => data.kategori[cat] ? data.kategori[cat] : 0);
@@ -1078,6 +1051,20 @@
       .then(res => { if(res.success) { showToast(res.message, "✅"); loadDashboardData(); loadFormOptionsAndLogs(); } else { showToast(res.message, "❌"); } })
       .catch(() => showToast("Koneksi API Gagal", "❌"));
     }
+
+    // =========================================================
+    // MODERATOR UTAMA JALUR AGRESIF DOMContentLoaded (ANTI-MACET FONT)
+    // =========================================================
+    document.addEventListener('DOMContentLoaded', function() {
+      updateDarkModeButton(document.documentElement.classList.contains('dark'));
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
+      document.getElementById('filterBulan').value = currentMonth;
+      
+      initializeApplicationData(currentMonth, currentYear);
+      loadFormOptionsAndLogs();
+    });
   </script>
 </body>
 </html>
