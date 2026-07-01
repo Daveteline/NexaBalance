@@ -727,16 +727,19 @@
       fetch(`${API_URL}?action=getGemini&data=${encodeURIComponent(promptData)}`)
         .then(res => res.json())
         .then(response => {
-          if (response.success) {
-            box.innerText = response.text;
-          } else {
-            if (response.text.includes("429") || response.text.includes("quota") || response.text.includes("Limit")) {
-              box.innerHTML = `⚠️ <span class="text-amber-500 dark:text-amber-400 font-bold">Server Gemini lagi ambil napas (Limit Gratisan 5x/menit). Tunggu sekitar 20 detik, lalu klik tombol lagi ya, Bro!</span>`;
-            } else {
-              box.innerText = response.text;
-            }
-          }
-        })
+      // Pengecekan aman: pastikan response dan response.text ada isinya dulu sebelum di-includes
+      if (response && response.success) {
+        box.innerText = response.text;
+      } else {
+        const errorMsg = (response && response.text) ? response.text : "Error tidak diketahui";
+        
+        if (errorMsg.includes("429") || errorMsg.includes("quota") || errorMsg.includes("Limit")) {
+          box.innerHTML = `⚠️ <span class="text-amber-500 dark:text-amber-400 font-bold">Server Gemini lagi ambil napas (Limit Gratisan 5x/menit). Tunggu sekitar 20 detik, lalu klik tombol lagi ya, Bro!</span>`;
+        } else {
+          box.innerText = errorMsg;
+        }
+      }
+    })
         .catch(err => {
           console.error(err);
           box.innerHTML = `<span class="text-red-400 font-semibold">Gagal terhubung ke jembatan Google Apps Script Cloud.</span>`;
@@ -950,7 +953,7 @@
       document.getElementById('compUserR').innerHTML = `${formatRupiah(data.totalRachel)} <span class="${rChange >= 0 ? 'text-red-500' : 'text-emerald-500'} font-bold">${rChange >= 0 ? '↑' : '↓'} ${Math.abs(rChange).toFixed(1)}%</span>`;
 
       updateCharts(data, pctH, pctR, allCategoriesSet);
-      triggerGeminiInsight(data);
+      //triggerGeminiInsight(data);
     }
 
     function updateCharts(data, pctH, pctR, allCategoriesSet) {
