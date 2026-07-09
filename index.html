@@ -19,6 +19,27 @@
   
   <style type="text/tailwindcss">
     @custom-variant dark (&:where(.dark, .dark *));
+
+    /* Custom Sleek Dark Scrollbar Global & Containers */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #475569; /* Warna Slate-600 yang menyatu dengan dark mode */
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b; /* Warna Slate-500 saat di-hover */
+    }
+    /* Firefox Support */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #475569 transparent;
+    }
   </style>
 
   <style>
@@ -1012,25 +1033,40 @@
     function cetakTabelRiwayat(dataArray) {
       const tbody = document.getElementById('tabelRiwayat'); tbody.innerHTML = '';
       if(!dataArray || dataArray.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400 dark:text-slate-500 font-medium">Tidak ada transaksi ditemukan</td></tr>`; return; }
+      
       dataArray.forEach(t => {
         let color = t.user === 'Harley' ? 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400' : 'bg-pink-50 text-pink-600 dark:bg-pink-950/40 dark:text-pink-400';
         let escapedKet = (t.keterangan || '').replace(/'/g, "\\'").replace(/"/g, '\\"');
+        
         tbody.innerHTML += `
-          <tr class="border-b border-slate-100 dark:border-slate-700/40 hover:bg-slate-50/50 dark:hover:bg-slate-700/20">
+          <tr class="border-b border-slate-100 dark:border-slate-700/40 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
             <td class="p-2 whitespace-nowrap dark:text-slate-300">${t.tanggal}</td>
             <td class="p-2"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${color}">${t.user}</span></td>
             <td class="p-2 font-semibold dark:text-slate-200">${t.kategori}</td>
             <td class="p-2 dark:text-slate-300 font-medium"><span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-700/80 font-bold text-slate-600 dark:text-slate-300">${t.metode || 'Cash'}</span></td>
             <td class="p-2 text-slate-400 dark:text-slate-400 max-w-[140px] truncate">${t.keterangan || '-'}</td>
             <td class="p-2 text-right font-bold text-slate-800 dark:text-white whitespace-nowrap">${formatRupiah(t.jumlah)}</td>
-            <td class="p-2 text-center space-x-1.5 whitespace-nowrap">
-              <button onclick="siapkanEdit('${t.id}', '${t.tanggal}', '${t.user}', '${t.kategori}', ${t.jumlah}, '${escapedKet}', '${t.metode || 'Cash'}')" class="text-blue-500 hover:text-blue-700 font-bold cursor-pointer">✏️</button>
-              <button onclick="hapusTransaksi('${t.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer">🗑️</button>
+            <td class="p-2 text-center space-x-2 whitespace-nowrap">
+              
+              <button onclick="siapkanEdit('${t.id}', '${t.tanggal}', '${t.user}', '${t.kategori}', ${t.jumlah}, '${escapedKet}', '${t.metode || 'Cash'}')" 
+                      class="cursor-pointer inline-flex items-center justify-center w-7 h-7 bg-blue-500/10 hover:bg-blue-500 text-blue-500 hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg transition-all active:scale-90" title="Sunting">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                </svg>
+              </button>
+              
+              <button onclick="hapusTransaksi('${t.id}')" 
+                      class="cursor-pointer inline-flex items-center justify-center w-7 h-7 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white dark:text-red-400 dark:hover:text-white rounded-lg transition-all active:scale-90" title="Hapus">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </button>
+              
             </td>
           </tr>`;
       });
     }
-
+    
     function aplikasikanFilterHistori() {
       const mulai = document.getElementById('filterHistoriMulai').value;
       const selesai = document.getElementById('filterHistoriSelesai').value;
