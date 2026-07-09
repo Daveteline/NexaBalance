@@ -54,38 +54,52 @@
   <div class="fixed inset-0 overflow-y-auto p-4 md:p-6 pb-32">
     <div class="max-w-7xl mx-auto space-y-6">
       
+      <!-- HEADER FIXED ZONE (MOBILE RESPONSIVE BURGER) -->
       <div class="sticky top-0 z-50 bg-[#f8fafc] dark:bg-slate-900 -mx-4 md:-mx-6 px-4 md:px-6 pt-1 pb-4 transition-colors">
-        <div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xs border border-slate-100 dark:border-slate-700/80 gap-4">
-          <div class="flex items-center space-x-2">
-            <div class="text-2xl">💳</div>
-            <div>
-              <h1 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">EXPENSE TRACKER</h1>
-              <p class="text-xs font-semibold text-slate-400 dark:text-slate-400">Harley & Rachel Hub</p>
+        <div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xs border border-slate-100 dark:border-slate-700/80 gap-4 px-5">
+          
+          <!-- Baris Utama: Logo & Tombol Burger (Sejajar horizontal di HP) -->
+          <div class="flex justify-between items-center w-full lg:w-auto">
+            <div class="flex items-center space-x-2">
+              <div class="text-2xl">💳</div>
+              <div>
+                <h1 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">EXPENSE TRACKER</h1>
+                <p class="text-xs font-semibold text-slate-400 dark:text-slate-400">Harley & Rachel Hub</p>
+              </div>
             </div>
+            
+            <!-- TOMBOL BURGER (Hanya muncul di layar HP / Tablet kecil) -->
+            <button onclick="toggleMobileMenu()" id="btnBurger" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition cursor-pointer focus:outline-none">
+              <svg id="burgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
           </div>
           
-          <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto justify-end">
-            <button onclick="toggleDarkMode()" id="btnDarkMode" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-600">
+          <!-- MENU PANEL (Otomatis sembunyi di HP, otomatis lebar penuh kalau laci dibuka) -->
+          <div id="mobileMenu" class="hidden lg:flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto justify-end mt-2 lg:mt-0 pt-3 lg:pt-0 border-t border-slate-100 dark:border-slate-700/60 lg:border-t-0">
+            <button onclick="toggleDarkMode(); closeMobileMenu()" id="btnDarkMode" class="w-full lg:w-auto bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-600">
               🌙 Dark Mode
             </button>
 
-            <div class="flex space-x-2 bg-slate-50 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 w-full sm:w-auto justify-center">
-              <select id="filterBulan" onchange="loadDashboardData()" class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-hidden cursor-pointer">
+            <div class="flex space-x-2 bg-slate-50 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 w-full lg:w-auto justify-center">
+              <select id="filterBulan" onchange="loadDashboardData(); closeMobileMenu()" class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-hidden cursor-pointer">
                 <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
                 <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
                 <option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option>
                 <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
               </select>
-              <select id="filterTahun" onchange="loadDashboardData()" class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-hidden cursor-pointer"></select>
+              <select id="filterTahun" onchange="loadDashboardData(); closeMobileMenu()" class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-hidden cursor-pointer"></select>
             </div>
 
-            <div class="flex space-x-1 bg-slate-100 dark:bg-slate-900/40 p-1 rounded-xl w-full sm:w-auto justify-center flex-wrap gap-y-1">
-              <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" class="px-3 py-2 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-xs">📊 Dashboard</button>
-              <button onclick="switchTab('comparison')" id="btn-tab-comparison" class="px-3 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">📊 Perbandingan</button>
-              <button onclick="switchTab('input')" id="btn-tab-input" class="px-3 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">📝 Input & Kelola</button>
-              <button onclick="switchTab('budget')" id="btn-tab-budget" class="px-3 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">⚙️ Pengaturan</button>
+            <div class="flex space-x-1 bg-slate-100 dark:bg-slate-900/40 p-1 rounded-xl w-full lg:w-auto justify-center flex-wrap gap-y-1">
+              <button onclick="switchTab('dashboard'); closeMobileMenu()" id="btn-tab-dashboard" class="px-3 py-2 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-xs">📊 Dashboard</button>
+              <button onclick="switchTab('comparison'); closeMobileMenu()" id="btn-tab-comparison" class="px-3 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">📊 Perbandingan</button>
+              <button onclick="switchTab('input'); closeMobileMenu()" id="btn-tab-input" class="px-3 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">📝 Input & Kelola</button>
+              <button onclick="switchTab('budget'); closeMobileMenu()" id="btn-tab-budget" class="px-3 py-2 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">⚙️ Pengaturan</button>
             </div>
           </div>
+          
         </div>
       </div>
 
@@ -1083,6 +1097,35 @@
       initializeApplicationData(currentMonth, currentYear);
       loadFormOptionsAndLogs();
     });
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const icon = document.getElementById('burgerIcon');
+      const isHidden = menu.classList.contains('hidden');
+      
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+        // Animasi: Ganti ikon jadi lambang huruf "X" (Close) saat laci terbuka
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>';
+      } else {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+        // Kembalikan ke ikon semula Garis Tiga (Burger)
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>';
+      }
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const icon = document.getElementById('burgerIcon');
+      // Otomatis menutup laci menu hanya jika layar sedang dalam kondisi mobile breakpoint (< 1024px)
+      if (window.innerWidth < 1024) {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>';
+      }
+    }
   </script>
 </body>
 </html>
