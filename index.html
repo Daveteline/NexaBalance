@@ -40,6 +40,56 @@
       scrollbar-width: thin;
       scrollbar-color: #475569 transparent;
     }
+
+    /* =========================================================
+       PREMIUM UPGRADE: GLOW EFFECT & ELEVASI (NIMBUL) 
+       ========================================================= */
+
+    /* 1. Efek Nimbul & Glow Lembut untuk Semua Card Dasbor & Input */
+    .grid > div {
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                  box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                  border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Pas Kursor Berada di Atas Card (Hover) */
+    .grid > div:hover {
+      transform: translateY(-4px); /* Efek Nimbul Naik Ke Atas */
+      box-shadow: 0 12px 25px -5px rgba(59, 130, 246, 0.08), 
+                  0 8px 16px -6px rgba(99, 102, 241, 0.08);
+    }
+    
+    /* Glow Card Khusus Saat Mode Gelap (Dark Mode) */
+    .dark .grid > div:hover {
+      box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5), 
+                  0 4px 20px 2px rgba(99, 102, 241, 0.15); /* Neon glow ungu-biru tipis */
+      border-color: rgba(99, 102, 241, 0.35) !important; /* Border ikut glowing */
+    }
+
+    /* 2. Efek Tactile, Nimbul & Glow untuk Semua Tombol Utama */
+    button:not(#btnBurger), input[type="submit"] {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Pas Tombol Di-Hover */
+    button:not(#btnBurger):hover, input[type="submit"]:hover {
+      transform: translateY(-1.5px); /* Tombol agak ngangkat */
+      box-shadow: 0 6px 15px rgba(99, 102, 241, 0.2);
+    }
+    
+    .dark button:not(#btnBurger):hover, .dark input[type="submit"]:hover {
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4); /* Glow tombol lebih tegas di dark mode */
+    }
+    
+    /* Efek Mantul Pas Diklik (Pressed State) */
+    button:not(#btnBurger):active, input[type="submit"]:active {
+      transform: translateY(0.5px) scale(0.97); /* Agak mendem sedikit pas ditekan */
+    }
+
+    /* Glow Tambahan untuk Tombol Sakral (Simpan Transaksi & Ambil AI) */
+    #btnSimpan:hover, #btn-generate-ai:hover {
+      box-shadow: 0 0 18px rgba(99, 102, 241, 0.6) !important;
+    }
   </style>
 
   <style>
