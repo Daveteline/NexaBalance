@@ -42,78 +42,79 @@
     }
 
     /* =========================================================
-       PREMIUM UPGRADE V2: CORE GLOW EFFECT & TACTILE ELEVATION
+       PREMIUM UPGRADE V3: EXTRA INTENSE NEON GLOW & DEEP SHADOWS
        ========================================================= */
 
-    /* 1. Efek Nimbul & Glow untuk Semua Card (Termasuk yang Standalone & Bento) */
+    /* 1. Efek Base Card (Biar kelihatan nimbul dikit dari awal di Light Mode) */
     .grid > div, 
     #tab-dashboard > div.rounded-2xl,
     #tab-comparison > div.rounded-2xl {
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
                   box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
                   border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
     }
-    
-    /* Hover State untuk Semua Card (Auto-Nimbul) */
+
+    /* Hover State - Bikin Bayangan Jauh Lebih Tebal & Berwarna di Mode Terang */
     .grid > div:hover, 
     #tab-dashboard > div.rounded-2xl:hover,
     #tab-comparison > div.rounded-2xl:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 25px -5px rgba(59, 130, 246, 0.08), 
-                  0 8px 16px -6px rgba(99, 102, 241, 0.08);
+      transform: translateY(-6px); /* Naik lebih tinggi agar efek melayang kerasa */
+      /* Kombinasi shadow gelap (slate) + tint biru biar bayangan sangat kelihatan di background terang */
+      box-shadow: 0 20px 30px -5px rgba(59, 130, 246, 0.2), 
+                  0 10px 22px -6px rgba(15, 23, 42, 0.18);
     }
     
-    /* Dark Mode Glow untuk Semua Card */
+    /* Hover State - Mode Gelap (Glow Ungu-Biru Dibuat Tebal & Nyala) */
     .dark .grid > div:hover, 
     .dark #tab-dashboard > div.rounded-2xl:hover, 
     .dark #tab-comparison > div.rounded-2xl:hover {
-      box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5), 
-                  0 4px 20px 2px rgba(99, 102, 241, 0.15);
-      border-color: rgba(99, 102, 241, 0.35) !important;
+      /* Gabungan bayangan hitam pekat + pendaran neon (glow) yang dipertebal radiusnya */
+      box-shadow: 0 25px 40px -5px rgba(0, 0, 0, 0.75), 
+                  0 0 25px 4px rgba(99, 102, 241, 0.35); /* Aura neon di-boost ke 0.35 */
+      border-color: rgba(99, 102, 241, 0.6) !important; /* Garis tepi ungu dibuat cerah tegas */
     }
 
-    /* 2. Efek Nimbul & Mendem Khusus Pilihan "User Pelapor" (Tombol Label Radio) */
+    /* 2. Efek Nimbul & Mendem Pilihan "User Pelapor" (Radio Labels) */
     #formTransaksi label.cursor-pointer {
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    /* Hover State User Pelapor */
     #formTransaksi label.cursor-pointer:hover {
-      transform: translateY(-2.5px); /* Ngangkat tipis pas di-hover */
-      box-shadow: 0 6px 12px rgba(59, 130, 246, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(59, 130, 246, 0.22);
     }
     
     .dark #formTransaksi label.cursor-pointer:hover {
-      box-shadow: 0 6px 15px rgba(99, 102, 241, 0.2);
-      border-color: rgba(99, 102, 241, 0.4) !important;
+      box-shadow: 0 8px 22px rgba(99, 102, 241, 0.45);
+      border-color: rgba(99, 102, 241, 0.6) !important;
     }
     
-    /* Mendem State User Pelapor (Pas Diklik/Ditekan) */
     #formTransaksi label.cursor-pointer:active {
-      transform: translateY(1px) scale(0.97); /* Efek mendem mantul ke dalem */
+      transform: translateY(1px) scale(0.96);
     }
 
-    /* 3. Efek Tactile & Glow untuk Semua Tombol Utama */
+    /* 3. Efek Bayangan & Glow untuk Semua Tombol Utama (Dipertegas) */
     button:not(#btnBurger), input[type="submit"] {
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     button:not(#btnBurger):hover, input[type="submit"]:hover {
-      transform: translateY(-1.5px);
-      box-shadow: 0 6px 15px rgba(99, 102, 241, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.38);
     }
     
     .dark button:not(#btnBurger):hover, .dark input[type="submit"]:hover {
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 8px 25px -2px rgba(99, 102, 241, 0.65); /* Sangat menyala di dark mode */
     }
     
     button:not(#btnBurger):active, input[type="submit"]:active {
-      transform: translateY(0.5px) scale(0.97);
+      transform: translateY(0.5px) scale(0.96);
     }
 
-    /* Glow Spesial Tombol Sakral (Simpan & Ambil AI) */
+    /* Glow Paling Maksimal untuk Tombol Utama (Simpan & Ambil AI) */
     #btnSimpan:hover, #btn-generate-ai:hover {
-      box-shadow: 0 0 18px rgba(99, 102, 241, 0.6) !important;
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.8) !important;
     }
   </style>
 
