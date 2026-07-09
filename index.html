@@ -151,11 +151,9 @@
   <div class="fixed inset-0 overflow-y-auto p-4 md:p-6 pb-32">
     <div class="max-w-7xl mx-auto space-y-6">
       
-      <!-- HEADER FIXED ZONE (MOBILE RESPONSIVE BURGER) -->
       <div class="sticky top-0 z-50 bg-[#f8fafc] dark:bg-slate-900 -mx-4 md:-mx-6 px-4 md:px-6 pt-1 pb-4 transition-colors">
         <div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xs border border-slate-100 dark:border-slate-700/80 gap-4 px-5">
           
-          <!-- Baris Utama: Logo & Tombol Burger (Sejajar horizontal di HP) -->
           <div class="flex justify-between items-center w-full lg:w-auto">
             <div class="flex items-center space-x-2">
               <div class="text-2xl">💳</div>
@@ -165,7 +163,6 @@
               </div>
             </div>
             
-            <!-- TOMBOL BURGER (Hanya muncul di layar HP / Tablet kecil) -->
             <button onclick="toggleMobileMenu()" id="btnBurger" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition cursor-pointer focus:outline-none">
               <svg id="burgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
@@ -173,10 +170,9 @@
             </button>
           </div>
           
-          <!-- MENU PANEL (Otomatis sembunyi di HP, otomatis lebar penuh kalau laci dibuka) -->
           <div id="mobileMenu" class="hidden lg:flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto justify-end mt-2 lg:mt-0 pt-3 lg:pt-0 border-t border-slate-100 dark:border-slate-700/60 lg:border-t-0">
             <button onclick="toggleDarkMode(); closeMobileMenu()" id="btnDarkMode" class="w-full lg:w-auto bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-600">
-              🌙 Dark Mode
+              ☀️ Light Mode
             </button>
 
             <div class="flex space-x-2 bg-slate-50 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 w-full lg:w-auto justify-center">
@@ -300,7 +296,7 @@
 
           <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex flex-col justify-between">
             <div class="flex items-center space-x-2.5">
-              <div class="w-10 h-10 rounded-full bg-teal-50 dark:bg-teal-950/40 flex items-center justify-center text-teal-500 text-xl shadow-xs border border-teal-100 dark:border-teal-900/40">📊</div>
+              <div class="w-10 h-10 rounded-full bg-teal-50 dark:bg-teal-950/40 flex items-center justify-center text-teal-500 text-xl shadow-xs border border-teal-100 dark:teal-900/40">📊</div>
               <div>
                 <p class="text-[10px] font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Banyak Transaksi</p>
                 <h3 id="txtBanyakTx" class="text-base font-black text-slate-800 dark:text-white mt-0.5">0 Tx</h3>
@@ -482,7 +478,9 @@
             <span class="text-slate-400 dark:text-slate-500 italic">Klik tombol "Ambil Analisis AI" di kanan atas untuk menyuruh Gemini menyusun laporan perkembangan finansial kalian secara organik.</span>
           </div>
         </div>
-      </div> <div id="tab-input" class="tab-content space-y-6">
+      </div> 
+      
+      <div id="tab-input" class="tab-content space-y-6">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs space-y-4">
             <h3 id="judulForm" class="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-700 pb-2">📌 Catatan Baru</h3>
@@ -500,23 +498,23 @@
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Tanggal</label>
-                <input type="date" id="inputTanggal" required class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-blue-500">
+                <input type="date" id="inputTanggal" required class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Kategori</label>
-                <select id="inputKategori" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-blue-500"></select>
+                <select id="inputKategori" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all"></select>
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Metode Pembayaran</label>
-                <select id="inputMetode" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-blue-500"></select>
+                <select id="inputMetode" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all"></select>
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Jumlah Nominal Rp</label>
-                <input type="number" id="inputJumlah" required min="1" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-blue-500">
+                <input type="number" id="inputJumlah" required min="1" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Keterangan</label>
-                <textarea id="inputKeterangan" rows="2" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-blue-500"></textarea>
+                <textarea id="inputKeterangan" rows="2" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all"></textarea>
               </div>
               <button type="submit" id="btnSimpan" class="w-full bg-slate-950 text-white dark:bg-white dark:text-slate-900 py-2 rounded-xl font-bold text-xs shadow-md hover:bg-slate-800 dark:hover:bg-slate-100 transition">🚀 Simpan Transaksi</button>
               <button type="button" id="btnBatalEdit" onclick="resetFormState()" class="hidden w-full bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300 py-2 rounded-xl font-bold text-xs transition">✕ Batal Edit</button>
@@ -527,10 +525,10 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 dark:border-slate-700 pb-2 gap-2">
               <h3 class="text-sm font-bold text-slate-800 dark:text-white">📋 Riwayat Transaksi</h3>
               <div class="flex flex-wrap items-center gap-1.5 w-full sm:w-auto justify-end">
-                <input type="text" id="searchHistori" oninput="aplikasikanFilterHistori()" placeholder="🔍 Cari transaksi..." class="bg-slate-50 dark:bg-slate-900 px-2.5 py-1 rounded-lg text-[10px] font-bold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 focus:outline-blue-500 w-full sm:w-36">
-                <input type="date" id="filterHistoriMulai" onchange="aplikasikanFilterHistori()" class="bg-slate-50 dark:bg-slate-900 px-1.5 py-1 rounded-lg text-[10px] font-bold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 focus:outline-blue-500">
+                <input type="text" id="searchHistori" oninput="aplikasikanFilterHistori()" placeholder="🔍 Cari transaksi..." class="bg-slate-50 dark:bg-slate-900 px-2.5 py-1 rounded-lg text-[10px] font-bold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all w-full sm:w-36">
+                <input type="date" id="filterHistoriMulai" onchange="aplikasikanFilterHistori()" class="bg-slate-50 dark:bg-slate-900 px-1.5 py-1 rounded-lg text-[10px] font-bold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
                 <span class="text-slate-400 text-[9px] font-bold">s/d</span>
-                <input type="date" id="filterHistoriSelesai" onchange="aplikasikanFilterHistori()" class="bg-slate-50 dark:bg-slate-900 px-1.5 py-1 rounded-lg text-[10px] font-bold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 focus:outline-blue-500">
+                <input type="date" id="filterHistoriSelesai" onchange="aplikasikanFilterHistori()" class="bg-slate-50 dark:bg-slate-900 px-1.5 py-1 rounded-lg text-[10px] font-bold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
                 <button onclick="clearFilterHistori()" class="text-red-500 hover:text-red-700 text-[11px] font-black px-1" title="Clear Filter">✕</button>
               </div>
             </div>
@@ -556,7 +554,8 @@
       </div>
 
       <div id="tab-budget" class="tab-content space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
             <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
               <span class="text-xl">💰</span>
@@ -565,9 +564,28 @@
             <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">Mengubah plafon budget untuk kombinasi Bulan & Tahun yang sedang Anda pilih pada filter menu atas.</p>
             <div>
               <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Target Anggaran (Rp)</label>
-              <input type="number" id="inputSetBudget" placeholder="Contoh: 5000000" class="w-full bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-white focus:outline-blue-500">
+              <input type="number" id="inputSetBudget" placeholder="Contoh: 5000000" class="w-full bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
             </div>
             <button onclick="saveManualBudget()" class="w-full bg-slate-950 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">💾 Simpan Target Anggaran</button>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
+            <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+              <span class="text-xl">🏷️</span>
+              <h3 class="text-sm font-bold text-slate-800 dark:text-white">Kelola Kategori</h3>
+            </div>
+            <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">Tambahkan kategori kustom baru (bisa pakai emoji) atau hapus kategori yang sudah tidak digunakan.</p>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Nama Kategori Baru</label>
+                <input type="text" id="inputKategoriBaru" placeholder="Contoh: 🚀 Bisnis" class="w-full bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
+              </div>
+              <button onclick="saveManualCategory()" class="w-full bg-slate-950 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">➕ Daftarkan Kategori</button>
+            </div>
+            <div id="listKategoriKustomContainer" class="pt-3 border-t border-slate-100 dark:border-slate-700">
+              <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1.5">Daftar Kategori Aktif:</label>
+              <div id="listKategoriKustom" class="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto pr-1"></div>
+            </div>
           </div>
 
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
@@ -578,7 +596,7 @@
             <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">Tambahkan opsi pembayaran baru (misalnya: OVO, GoPay, Kartu Kredit) ke dalam sistem secara mandiri.</p>
             <div>
               <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Nama Metode Baru</label>
-              <input type="text" id="inputMetodeBaru" placeholder="Contoh: OVO, GoPay" class="w-full bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-white focus:outline-blue-500">
+              <input type="text" id="inputMetodeBaru" placeholder="Contoh: OVO, GoPay" class="w-full bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
             </div>
             <button onclick="saveManualPaymentMethod()" class="w-full bg-slate-950 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">➕ Daftarkan Metode Baru</button>
           </div>
@@ -592,7 +610,7 @@
             <div class="space-y-3">
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Angka Tahun Baru</label>
-                <input type="number" id="inputTahunBaru" placeholder="Contoh: 2031" min="2024" max="2100" class="w-full bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-white focus:outline-blue-500">
+                <input type="number" id="inputTahunBaru" placeholder="Contoh: 2031" min="2024" max="2100" class="w-full bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
               </div>
               <button onclick="saveManualYear()" class="w-full bg-slate-950 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">➕ Daftarkan Tahun Baru</button>
             </div>
@@ -601,6 +619,7 @@
               <div id="listTahunKustom" class="flex flex-wrap gap-1.5"></div>
             </div>
           </div>
+          
         </div>
       </div>
 
@@ -686,6 +705,9 @@
 
           const selKat = document.getElementById('inputKategori'); selKat.innerHTML = '';
           data.categories.forEach(k => { selKat.innerHTML += `<option value="${k}">${k}</option>`; });
+
+          // 🌟 SUNTIKAN: Sinkronisasi cetak chip kategori aktif pas start-up aplikasi
+          renderCategoriesManagement(data.categories);
 
           const selMet = document.getElementById('inputMetode'); selMet.innerHTML = '';
           data.paymentMethods.forEach(m => { selMet.innerHTML += `<option value="${m}">${m}</option>`; });
@@ -812,9 +834,7 @@
           if (response && response.success) {
             box.innerText = response.text; 
           } else {
-            // DETEKTOR TRANSPARAN: Jika text kosong, bongkar string object respons riil dari backend
             const errorMsg = response.text || response.error || response.message || JSON.stringify(response);
-            
             if (errorMsg.includes("429") || errorMsg.includes("quota") || errorMsg.includes("Limit")) {
               box.innerHTML = `⚠️ <span class="text-amber-500 dark:text-amber-400 font-bold">Server Gemini lagi ambil napas (Limit Gratisan 5x/menit). Tunggu sekitar 20 detik, lalu klik tombol lagi ya, Bro!</span>`;
             } else {
@@ -833,7 +853,6 @@
     }
     
     function renderDashboard(data) {
-      // Simpan data di window scope agar fungsi AI bisa membacanya setiap saat
       window.lastDashboardData = data;
 
       document.getElementById('txtBudget').innerText = formatRupiah(data.budget);
@@ -1098,6 +1117,9 @@
       fetch(`${API_URL}?action=getCategories`).then(res => res.json()).then(list => {
         const sel = document.getElementById('inputKategori'); sel.innerHTML = '';
         list.forEach(k => { sel.innerHTML += `<option value="${k}">${k}</option>`; });
+        
+        // 🌟 SUNTIKAN: Sinkronisasi cetak chip kelola kategori pas form di-update
+        renderCategoriesManagement(list);
       });
       fetch(`${API_URL}?action=getPaymentMethods`).then(res => res.json()).then(list => {
         const sel = document.getElementById('inputMetode'); sel.innerHTML = '';
@@ -1199,6 +1221,50 @@
       .catch(() => showToast("Koneksi API Gagal", "❌"));
     }
 
+    // =========================================================
+    // 🌟 SUNTIKAN JAVASCRIPT BARU: FUNGSI CRUD MANAGEMENT KATEGORI
+    // =========================================================
+    function renderCategoriesManagement(list) {
+      const listDiv = document.getElementById('listKategoriKustom');
+      if (!listDiv) return;
+      listDiv.innerHTML = '';
+      list.forEach(k => {
+        listDiv.innerHTML += `
+          <span class="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-700/60 px-2 py-1 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600 shadow-xs">
+            ${k}
+            <button type="button" onclick="deleteManualCategory('${k}')" class="text-red-500 hover:text-red-700 ml-0.5 font-black cursor-pointer text-[11px]">✕</button>
+          </span>`;
+      });
+    }
+
+    function saveManualCategory() {
+      const name = document.getElementById('inputKategoriBaru').value.trim();
+      if(!name) { showToast("Masukkan nama kategori valid!", "❌"); return; }
+      fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'addCategory', kategori: name }) })
+      .then(res => res.json())
+      .then(res => {
+        if(res.success) {
+          showToast(res.message, "✅");
+          document.getElementById('inputKategoriBaru').value = '';
+          loadFormOptionsAndLogs(); 
+          loadDashboardData(); 
+        } else { showToast(res.message, "❌"); }
+      });
+    }
+
+    function deleteManualCategory(kategori) {
+      if(!confirm(`Hapus kategori "${kategori}"?\nTransaksi lama yang menggunakan kategori ini tidak akan hilang dari riwayat, tapi tidak bisa dipilih lagi untuk catatan baru.`)) return;
+      fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteCategory', kategori: kategori }) })
+      .then(res => res.json())
+      .then(res => {
+        if(res.success) { 
+          showToast(res.message, "✅"); 
+          loadFormOptionsAndLogs(); 
+          loadDashboardData();
+        } else { showToast(res.message, "❌"); }
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       updateDarkModeButton(document.documentElement.classList.contains('dark'));
       const currentDate = new Date();
@@ -1218,12 +1284,10 @@
       if (isHidden) {
         menu.classList.remove('hidden');
         menu.classList.add('flex');
-        // Animasi: Ganti ikon jadi lambang huruf "X" (Close) saat laci terbuka
         icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>';
       } else {
         menu.classList.add('hidden');
         menu.classList.remove('flex');
-        // Kembalikan ke ikon semula Garis Tiga (Burger)
         icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>';
       }
     }
@@ -1231,7 +1295,6 @@
     function closeMobileMenu() {
       const menu = document.getElementById('mobileMenu');
       const icon = document.getElementById('burgerIcon');
-      // Otomatis menutup laci menu hanya jika layar sedang dalam kondisi mobile breakpoint (< 1024px)
       if (window.innerWidth < 1024) {
         menu.classList.add('hidden');
         menu.classList.remove('flex');
