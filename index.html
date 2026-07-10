@@ -29,11 +29,11 @@
       background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-      background: #475569; /* Warna Slate-600 yang menyatu dengan dark mode */
+      background: #475569;
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #64748b; /* Warna Slate-500 saat di-hover */
+      background: #64748b;
     }
     /* Firefox Support */
     * {
@@ -41,11 +41,7 @@
       scrollbar-color: #475569 transparent;
     }
 
-    /* =========================================================
-       PREMIUM UPGRADE V3: EXTRA INTENSE NEON GLOW & DEEP SHADOWS
-       ========================================================= */
-
-    /* 1. Efek Base Card (Biar kelihatan nimbul dikit dari awal di Light Mode) */
+    /* PREMIUM UPGRADE V3: EXTRA INTENSE NEON GLOW & DEEP SHADOWS */
     .grid > div, 
     #tab-dashboard > div.rounded-2xl,
     #tab-comparison > div.rounded-2xl {
@@ -55,27 +51,22 @@
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
     }
 
-    /* Hover State - Bikin Bayangan Jauh Lebih Tebal & Berwarna di Mode Terang */
     .grid > div:hover, 
     #tab-dashboard > div.rounded-2xl:hover,
     #tab-comparison > div.rounded-2xl:hover {
-      transform: translateY(-6px); /* Naik lebih tinggi agar efek melayang kerasa */
-      /* Kombinasi shadow gelap (slate) + tint biru biar bayangan sangat kelihatan di background terang */
+      transform: translateY(-6px);
       box-shadow: 0 20px 30px -5px rgba(59, 130, 246, 0.2), 
                   0 10px 22px -6px rgba(15, 23, 42, 0.18);
     }
     
-    /* Hover State - Mode Gelap (Glow Ungu-Biru Dibuat Tebal & Nyala) */
     .dark .grid > div:hover, 
     .dark #tab-dashboard > div.rounded-2xl:hover, 
     .dark #tab-comparison > div.rounded-2xl:hover {
-      /* Gabungan bayangan hitam pekat + pendaran neon (glow) yang dipertebal radiusnya */
       box-shadow: 0 25px 40px -5px rgba(0, 0, 0, 0.75), 
-                  0 0 25px 4px rgba(99, 102, 241, 0.35); /* Aura neon di-boost ke 0.35 */
-      border-color: rgba(99, 102, 241, 0.6) !important; /* Garis tepi ungu dibuat cerah tegas */
+                  0 0 25px 4px rgba(99, 102, 241, 0.35);
+      border-color: rgba(99, 102, 241, 0.6) !important;
     }
-
-    /* 2. Efek Nimbul & Mendem Pilihan "User Pelapor" (Radio Labels) */
+    
     #formTransaksi label.cursor-pointer {
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -94,7 +85,6 @@
       transform: translateY(1px) scale(0.96);
     }
 
-    /* 3. Efek Bayangan & Glow untuk Semua Tombol Utama (Dipertegas) */
     button:not(#btnBurger), input[type="submit"] {
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -105,14 +95,13 @@
     }
     
     .dark button:not(#btnBurger):hover, .dark input[type="submit"]:hover {
-      box-shadow: 0 8px 25px -2px rgba(99, 102, 241, 0.65); /* Sangat menyala di dark mode */
+      box-shadow: 0 8px 25px -2px rgba(99, 102, 241, 0.65);
     }
     
     button:not(#btnBurger):active, input[type="submit"]:active {
       transform: translateY(0.5px) scale(0.96);
     }
 
-    /* Glow Paling Maksimal untuk Tombol Utama (Simpan & Ambil AI) */
     #btnSimpan:hover, #btn-generate-ai:hover {
       box-shadow: 0 0 25px rgba(99, 102, 241, 0.8) !important;
     }
@@ -151,11 +140,9 @@
   <div class="fixed inset-0 overflow-y-auto p-4 md:p-6 pb-32">
     <div class="max-w-7xl mx-auto space-y-6">
       
-      <!-- HEADER FIXED ZONE (MOBILE RESPONSIVE BURGER) -->
       <div class="sticky top-0 z-50 bg-[#f8fafc] dark:bg-slate-900 -mx-4 md:-mx-6 px-4 md:px-6 pt-1 pb-4 transition-colors">
         <div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xs border border-slate-100 dark:border-slate-700/80 gap-4 px-5">
           
-          <!-- Baris Utama: Logo & Tombol Burger -->
           <div class="flex justify-between items-center w-full lg:w-auto">
             <div class="flex items-center space-x-2">
               <div class="text-2xl">💳</div>
@@ -172,7 +159,6 @@
             </button>
           </div>
           
-          <!-- MENU PANEL -->
           <div id="mobileMenu" class="hidden lg:flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto justify-end mt-2 lg:mt-0 pt-3 lg:pt-0 border-t border-slate-100 dark:border-slate-700/60 lg:border-t-0">
             <button onclick="toggleDarkMode(); closeMobileMenu()" id="btnDarkMode" class="w-full lg:w-auto bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-600">
               ☀️ Light Mode
@@ -513,7 +499,6 @@
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Jumlah Nominal Rp</label>
-                <!-- 🌟 UPGRADE MICRO-INTERACTION MASKING LOG IN DI SINI (UBAH TYPE JADI TEXT) -->
                 <input type="text" id="inputJumlah" required placeholder="Contoh: 2.500.000" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
               </div>
               <div>
@@ -573,7 +558,6 @@
             <button onclick="saveManualBudget()" class="w-full bg-slate-950 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">💾 Simpan Target Anggaran</button>
           </div>
 
-          <!-- KELOLA KATEGORI TRANSAKSI KUSTOM -->
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
             <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
               <span class="text-xl">🏷️</span>
@@ -587,9 +571,15 @@
               </div>
               <button onclick="saveManualCategory()" class="w-full bg-slate-950 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">➕ Daftarkan Kategori</button>
             </div>
+            
             <div id="listKategoriKustomContainer" class="pt-3 border-t border-slate-100 dark:border-slate-700">
-              <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1.5">Daftar Kategori Aktif:</label>
-              <div id="listKategoriKustom" class="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto pr-1"></div>
+              <button type="button" onclick="toggleKategoriList()" class="w-full flex justify-between items-center text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase focus:outline-none cursor-pointer group">
+                <span class="group-hover:text-slate-800 dark:group-hover:text-white transition-colors">📋 Daftar Kategori Aktif</span>
+                <span id="arrowKategori" class="text-xs transition-colors group-hover:text-slate-800 dark:group-hover:text-white">▶</span>
+              </button>
+              <div id="listKategoriKustomWrapper" class="hidden mt-2">
+                <div id="listKategoriKustom" class="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto pr-1"></div>
+              </div>
             </div>
           </div>
 
@@ -634,12 +624,8 @@
   <script>
     Chart.register(ChartDataLabels);
 
-    // =========================================================
-    // KUNCI JEMBATAN API: URL WEB APP GOOGLE APPS SCRIPT LU
-    // =========================================================
     const API_URL = "https://script.google.com/macros/s/AKfycbywykI4s-HzeViIzYt6G7GjCJJqGnFKq-nDKVdQILZ8ye2dgmEid1yre2pz6LcnlgEO1g/exec"; 
 
-    // 14 Palet Warna Premium Ter-kalibrasi dinamis biar gak ada warna kembar
     const CHART_COLORS = [
       '#3b82f6', '#f97316', '#22c55e', '#a855f7', '#eab308', 
       '#06b6d4', '#ec4899', '#10b981', '#6366f1', '#14b8a6', 
@@ -682,6 +668,19 @@
     }
 
     function formatRupiah(angka) { return 'Rp' + new Intl.NumberFormat('id-ID').format(Math.round(angka)); }
+
+    // 🌟 SCRIPT ACCORDION TOGGLE KATEGORI LIST
+    function toggleKategoriList() {
+      const wrapper = document.getElementById('listKategoriKustomWrapper');
+      const arrow = document.getElementById('arrowKategori');
+      if (wrapper.classList.contains('hidden')) {
+        wrapper.classList.remove('hidden');
+        arrow.innerText = '▼';
+      } else {
+        wrapper.classList.add('hidden');
+        arrow.innerText = '▶';
+      }
+    }
 
     function renderYearsDropdown(yearsData) {
       const sel = document.getElementById('filterTahun');
@@ -1172,7 +1171,7 @@
       const q = document.getElementById('searchHistori').value.toLowerCase().trim();
       let hasilFilter = masterDataRiwayat;
       if(mulai) hasilFilter = hasilFilter.filter(t => t.tanggal >= mulai);
-      if(selesai) hasilFilter = stroke-linejoin.filter(t => t.tanggal <= selesai);
+      if(selesai) hasilFilter = hasilFilter.filter(t => t.tanggal <= selesai);
       if(q) { hasilFilter = hasilFilter.filter(t => t.user.toLowerCase().includes(q) || t.kategori.toLowerCase().includes(q) || (t.metode && t.metode.toLowerCase().includes(q)) || (t.keterangan && t.keterangan.toLowerCase().includes(q))); }
       cetakTabelRiwayat(hasilFilter);
     }
@@ -1188,7 +1187,6 @@
       document.getElementById('inputTanggal').value = tanggal;
       document.getElementById('inputKategori').value = kategori;
       
-      // 🌟 UPGRADE LIVE MASKING STATE EDIT: Format nominal ribuan saat data dimuat ke form
       document.getElementById('inputJumlah').value = new Intl.NumberFormat('id-ID').format(jumlah);
       
       document.getElementById('inputKeterangan').value = keterangan;
@@ -1209,8 +1207,6 @@
     function submitTransaksi(event) {
       event.preventDefault();
       const btn = document.getElementById('btnSimpan'); btn.disabled = true; btn.innerText = "⏳ Memproses...";
-      
-      // 🌟 UPGRADE LIVE MASKING SUBMIT: Buang semua titik agar kembali jadi nominal integer numerik sebelum terbang ke cloud
       const cleanJumlah = document.getElementById('inputJumlah').value.replace(/\./g, '');
 
       const formData = { 
@@ -1288,12 +1284,11 @@
       initializeApplicationData(currentMonth, currentYear);
       loadFormOptionsAndLogs();
 
-      // 🌟 UPGRADE LIVE MASKING LISTENER: Deteksi otomatis ketukan angka untuk memunculkan separator titik lokal
       const inputJumlah = document.getElementById('inputJumlah');
       if (inputJumlah) {
         inputJumlah.addEventListener('input', function() {
-          let nilaiMurni = this.value.replace(/\D/g, ''); // Buang semua non-angka
-          this.value = nilaiMurni ? new Intl.NumberFormat('id-ID').format(nilaiMurni) : ''; // Pasang format separator ribuan
+          let nilaiMurni = this.value.replace(/\D/g, ''); 
+          this.value = nilaiMurni ? new Intl.NumberFormat('id-ID').format(nilaiMurni) : ''; 
         });
       }
     });
