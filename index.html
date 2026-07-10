@@ -151,9 +151,11 @@
   <div class="fixed inset-0 overflow-y-auto p-4 md:p-6 pb-32">
     <div class="max-w-7xl mx-auto space-y-6">
       
+      <!-- HEADER FIXED ZONE (MOBILE RESPONSIVE BURGER) -->
       <div class="sticky top-0 z-50 bg-[#f8fafc] dark:bg-slate-900 -mx-4 md:-mx-6 px-4 md:px-6 pt-1 pb-4 transition-colors">
         <div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xs border border-slate-100 dark:border-slate-700/80 gap-4 px-5">
           
+          <!-- Baris Utama: Logo & Tombol Burger -->
           <div class="flex justify-between items-center w-full lg:w-auto">
             <div class="flex items-center space-x-2">
               <div class="text-2xl">💳</div>
@@ -170,6 +172,7 @@
             </button>
           </div>
           
+          <!-- MENU PANEL -->
           <div id="mobileMenu" class="hidden lg:flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto justify-end mt-2 lg:mt-0 pt-3 lg:pt-0 border-t border-slate-100 dark:border-slate-700/60 lg:border-t-0">
             <button onclick="toggleDarkMode(); closeMobileMenu()" id="btnDarkMode" class="w-full lg:w-auto bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-600">
               ☀️ Light Mode
@@ -510,7 +513,8 @@
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Jumlah Nominal Rp</label>
-                <input type="number" id="inputJumlah" required min="1" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
+                <!-- 🌟 UPGRADE MICRO-INTERACTION MASKING LOG IN DI SINI (UBAH TYPE JADI TEXT) -->
+                <input type="text" id="inputJumlah" required placeholder="Contoh: 2.500.000" class="w-full bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all">
               </div>
               <div>
                 <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5">Keterangan</label>
@@ -569,6 +573,7 @@
             <button onclick="saveManualBudget()" class="w-full bg-slate-950 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">💾 Simpan Target Anggaran</button>
           </div>
 
+          <!-- KELOLA KATEGORI TRANSAKSI KUSTOM -->
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-md space-y-4">
             <div class="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
               <span class="text-xl">🏷️</span>
@@ -634,22 +639,11 @@
     // =========================================================
     const API_URL = "https://script.google.com/macros/s/AKfycbywykI4s-HzeViIzYt6G7GjCJJqGnFKq-nDKVdQILZ8ye2dgmEid1yre2pz6LcnlgEO1g/exec"; 
 
-    // Koleksi 14 warna premium yang kontras, cerah, dan anti-kembar untuk kategori dinamis
+    // 14 Palet Warna Premium Ter-kalibrasi dinamis biar gak ada warna kembar
     const CHART_COLORS = [
-      '#3b82f6', // Blue (Belanja)
-      '#f97316', // Orange (Makan & Minuman)
-      '#22c55e', // Green (Rumah Tangga)
-      '#a855f7', // Purple (Kesehatan)
-      '#eab308', // Yellow (Lain-lain)
-      '#06b6d4', // Cyan (Pulsa & Internet)
-      '#ec4899', // Pink (Hiburan)
-      '#10b981', // Emerald (Pendidikan)
-      '#6366f1', // Indigo
-      '#14b8a6', // Teal
-      '#f43f5e', // Rose
-      '#f59e0b', // Amber
-      '#8b5cf6', // Violet
-      '#d946ef'  // Fuchsia
+      '#3b82f6', '#f97316', '#22c55e', '#a855f7', '#eab308', 
+      '#06b6d4', '#ec4899', '#10b981', '#6366f1', '#14b8a6', 
+      '#f43f5e', '#f59e0b', '#8b5cf6', '#d946ef'
     ];
 
     let masterDataRiwayat = []; 
@@ -722,7 +716,6 @@
           const selKat = document.getElementById('inputKategori'); selKat.innerHTML = '';
           data.categories.forEach(k => { selKat.innerHTML += `<option value="${k}">${k}</option>`; });
 
-          // 🌟 SUNTIKAN: Sinkronisasi cetak chip kategori aktif pas start-up aplikasi
           renderCategoriesManagement(data.categories);
 
           const selMet = document.getElementById('inputMetode'); selMet.innerHTML = '';
@@ -808,9 +801,6 @@
       });
     }
 
-    // =========================================================
-    // ENGINE EKSTRAKTOR DATA UNTUK PROMPT AI GEMINI (ANTI-CRASH)
-    // =========================================================
     function kumpulkanDataKomparatif() {
       if (!window.lastDashboardData) return "Belum ada inisialisasi rekap data bulanan.";
       const d = window.lastDashboardData;
@@ -843,7 +833,6 @@
     
       let promptData = kumpulkanDataKomparatif();
     
-      // Tembak ke Web App Google Apps Script
       fetch(`${API_URL}?action=getGemini&data=${encodeURIComponent(promptData)}`)
         .then(res => res.json())
         .then(response => {
@@ -963,7 +952,6 @@
         });
       }
 
-      // ENGINE PERHITUNGAN BENTO INSIGHT (DASHBOARD)
       const filterBln = parseInt(document.getElementById('filterBulan').value);
       const filterThn = parseInt(document.getElementById('filterTahun').value);
       let txFilterBulanIni = masterDataRiwayat.filter(t => {
@@ -1004,7 +992,6 @@
         document.getElementById('bentoRerataAngka').innerText = "Rp0";
       }
 
-      // CALCULATION ENGINE TAB PERBANDINGAN KOMPARATIF
       document.getElementById('compMainTotal').innerText = formatRupiah(data.totalPengeluaran);
       let MoMChangeNominal = data.totalPengeluaran - data.totalPengeluaranBulanLalu;
       let MoMChangePct = data.totalPengeluaranBulanLalu > 0 ? (MoMChangeNominal / data.totalPengeluaranBulanLalu) * 100 : 0;
@@ -1133,8 +1120,6 @@
       fetch(`${API_URL}?action=getCategories`).then(res => res.json()).then(list => {
         const sel = document.getElementById('inputKategori'); sel.innerHTML = '';
         list.forEach(k => { sel.innerHTML += `<option value="${k}">${k}</option>`; });
-        
-        // 🌟 SUNTIKAN: Sinkronisasi cetak chip kelola kategori pas form di-update
         renderCategoriesManagement(list);
       });
       fetch(`${API_URL}?action=getPaymentMethods`).then(res => res.json()).then(list => {
@@ -1187,7 +1172,7 @@
       const q = document.getElementById('searchHistori').value.toLowerCase().trim();
       let hasilFilter = masterDataRiwayat;
       if(mulai) hasilFilter = hasilFilter.filter(t => t.tanggal >= mulai);
-      if(selesai) hasilFilter = hasilFilter.filter(t => t.tanggal <= selesai);
+      if(selesai) hasilFilter = stroke-linejoin.filter(t => t.tanggal <= selesai);
       if(q) { hasilFilter = hasilFilter.filter(t => t.user.toLowerCase().includes(q) || t.kategori.toLowerCase().includes(q) || (t.metode && t.metode.toLowerCase().includes(q)) || (t.keterangan && t.keterangan.toLowerCase().includes(q))); }
       cetakTabelRiwayat(hasilFilter);
     }
@@ -1202,7 +1187,10 @@
       document.getElementById('btnBatalEdit').classList.remove('hidden');
       document.getElementById('inputTanggal').value = tanggal;
       document.getElementById('inputKategori').value = kategori;
-      document.getElementById('inputJumlah').value = jumlah;
+      
+      // 🌟 UPGRADE LIVE MASKING STATE EDIT: Format nominal ribuan saat data dimuat ke form
+      document.getElementById('inputJumlah').value = new Intl.NumberFormat('id-ID').format(jumlah);
+      
       document.getElementById('inputKeterangan').value = keterangan;
       document.getElementById('inputMetode').value = metode || 'Cash';
       if(user === 'Harley') document.getElementById('radioHarley').checked = true; else document.getElementById('radioRachel').checked = true;
@@ -1221,7 +1209,19 @@
     function submitTransaksi(event) {
       event.preventDefault();
       const btn = document.getElementById('btnSimpan'); btn.disabled = true; btn.innerText = "⏳ Memproses...";
-      const formData = { user: document.querySelector('input[name="user"]:checked').value, tanggal: document.getElementById('inputTanggal').value, kategori: document.getElementById('inputKategori').value, jumlah: document.getElementById('inputJumlah').value, keterangan: document.getElementById('inputKeterangan').value, metode: document.getElementById('inputMetode').value };
+      
+      // 🌟 UPGRADE LIVE MASKING SUBMIT: Buang semua titik agar kembali jadi nominal integer numerik sebelum terbang ke cloud
+      const cleanJumlah = document.getElementById('inputJumlah').value.replace(/\./g, '');
+
+      const formData = { 
+        user: document.querySelector('input[name="user"]:checked').value, 
+        tanggal: document.getElementById('inputTanggal').value, 
+        kategori: document.getElementById('inputKategori').value, 
+        jumlah: cleanJumlah, 
+        keterangan: document.getElementById('inputKeterangan').value, 
+        metode: document.getElementById('inputMetode').value 
+      };
+      
       fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: editModeId ? 'editTransaction' : 'addTransaction', id: editModeId, formData: formData }) })
       .then(res => res.json())
       .then(res => { btn.disabled = false; if(res.success) { showToast(res.message, "✅"); resetFormState(); loadDashboardData(); loadFormOptionsAndLogs(); } else { showToast(res.message, "❌"); } })
@@ -1237,9 +1237,6 @@
       .catch(() => showToast("Koneksi API Gagal", "❌"));
     }
 
-    // =========================================================
-    // 🌟 SUNTIKAN JAVASCRIPT BARU: FUNGSI CRUD MANAGEMENT KATEGORI
-    // =========================================================
     function renderCategoriesManagement(list) {
       const listDiv = document.getElementById('listKategoriKustom');
       if (!listDiv) return;
@@ -1290,6 +1287,15 @@
       
       initializeApplicationData(currentMonth, currentYear);
       loadFormOptionsAndLogs();
+
+      // 🌟 UPGRADE LIVE MASKING LISTENER: Deteksi otomatis ketukan angka untuk memunculkan separator titik lokal
+      const inputJumlah = document.getElementById('inputJumlah');
+      if (inputJumlah) {
+        inputJumlah.addEventListener('input', function() {
+          let nilaiMurni = this.value.replace(/\D/g, ''); // Buang semua non-angka
+          this.value = nilaiMurni ? new Intl.NumberFormat('id-ID').format(nilaiMurni) : ''; // Pasang format separator ribuan
+        });
+      }
     });
 
     function toggleMobileMenu() {
