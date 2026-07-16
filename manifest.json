@@ -2,7 +2,7 @@
   "name": "NexaBalance",
   "short_name": "NexaBalance",
   "description": "Premium Finance Hub by Harley & Rachel",
-  "start_url": "index.html",
+  "start_url": "index.html?v=2",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0a0f1d",
