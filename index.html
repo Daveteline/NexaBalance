@@ -142,6 +142,11 @@
 </head>
 <body class="bg-[#f8fafc] text-slate-800 dark:bg-slate-900 dark:text-slate-100">
 
+  <div id="toast" class="fixed top-5 right-5 z-[9999] transform translate-y-[-120px] opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold pointer-events-none">
+    <span id="toastIcon">💡</span>
+    <span id="toastMessage"></span>
+  </div>
+
   <div id="loadingScreen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 transition-opacity duration-500 ease-out">
     <div class="flex flex-col items-center space-y-4">
       <div class="relative w-14 h-14">
@@ -662,12 +667,27 @@
       document.getElementById('btnDarkMode').innerText = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
     }
 
+    /* 🔥 FIXED: AMAN ANTI-CRASH, JIKA ELEMEN HILANG TIDAK AKAN MERUSAK ALUR JS */
     function showToast(msg, icon = "💡") {
       const toast = document.getElementById('toast');
-      document.getElementById('toastMessage').innerText = msg;
-      document.getElementById('toastIcon').innerText = icon;
-      toast.className = "fixed top-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold";
-      setTimeout(() => { toast.className = "fixed top-5 right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold"; }, 3000);
+      const toastMessage = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+      
+      if (!toast || !toastMessage || !toastIcon) {
+        console.log(`${icon} ${msg}`); // Fallback jika dom bermasalah
+        return;
+      }
+      
+      toastMessage.innerText = msg;
+      toastIcon.innerText = icon;
+      
+      toast.className = "fixed top-5 right-5 z-[9999] transform translate-y-0 opacity-100 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold animate-pulse";
+      
+      setTimeout(() => { 
+        if (toast) {
+          toast.className = "fixed top-5 right-5 z-[9999] transform translate-y-[-120px] opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold pointer-events-none"; 
+        }
+      }, 3000);
     }
 
     function switchTab(tabName) {
@@ -1187,9 +1207,7 @@
       document.getElementById('inputJumlah').value = ''; document.getElementById('inputKeterangan').value = ''; document.getElementById('inputTanggal').value = new Date().toISOString().split('T')[0];
     }
 
-    /* =========================================================
-       🚀 OPTIMIZED V5: INPUT INSTAN & DIJAMIN LANGSUNG MUNCUL
-       ========================================================= */
+    /* 🔥 FIXED V6: INPUT LANGSUNG MUNCUL INSTAN + PROTEKSI SCRIPT CRASH */
     function submitTransaksi(event) {
       event.preventDefault();
       const btn = document.getElementById('btnSimpan'); btn.disabled = true; btn.innerText = "⏳ Memproses...";
@@ -1206,63 +1224,69 @@
         metode: document.getElementById('inputMetode').value 
       };
       
+      // OPTIMISTIC LOCAL UI UPDATE - Langsung lempar ke tabel lokal detik ini juga
+      const localTx = {
+        id: editModeId || ("tmp_" + Date.now()),
+        tanggal: formData.tanggal,
+        user: formData.user,
+        kategori: formData.kategori,
+        jumlah: parseInt(formData.jumlah),
+        keterangan: formData.keterangan,
+        metode: formData.metode
+      };
+      
+      if (editModeId) {
+        masterDataRiwayat = masterDataRiwayat.map(t => (String(t.id) === String(editModeId)) ? localTx : t);
+      } else {
+        masterDataRiwayat.unshift(localTx);
+      }
+      
+      cetakTabelRiwayat(masterDataRiwayat);
+      aplikasikanFilterHistori();
+      
       fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: editModeId ? 'editTransaction' : 'addTransaction', id: editModeId, formData: formData }) })
       .then(res => res.json())
       .then(res => { 
         btn.disabled = false; 
+        btn.innerText = "🚀 Simpan Transaksi";
         if(res.success) { 
           showToast(res.message, "✅"); 
-          
-          // ✨ OPTIMISTIC UI UPDATE: Suntik langsung ke DOM lokal secara instan
-          const localTx = {
-            id: editModeId || res.id || ("tmp_" + Date.now()),
-            tanggal: formData.tanggal,
-            user: formData.user,
-            kategori: formData.kategori,
-            jumlah: parseInt(formData.jumlah),
-            keterangan: formData.keterangan,
-            metode: formData.metode
-          };
-          
-          if (editModeId) {
-            masterDataRiwayat = masterDataRiwayat.map(t => (String(t.id) === String(editModeId)) ? localTx : t);
-          } else {
-            masterDataRiwayat.unshift(localTx);
-          }
-          
-          cetakTabelRiwayat(masterDataRiwayat);
-          aplikasikanFilterHistori();
           resetFormState(); 
-          
-          // Jeda aman 1200ms sebelum sync statistik agar spreadsheet cloud selesai memproses data
-          setTimeout(() => { initializeApplicationData(bln, thn); }, 1200);
-        } else { showToast(res.message, "❌"); } 
+          setTimeout(() => { initializeApplicationData(bln, thn); }, 1000);
+        } else { 
+          showToast(res.message, "❌"); 
+        } 
       })
-      .catch(() => { btn.disabled = false; showToast("Koneksi API Gagal", "❌"); });
+      .catch((err) => { 
+        console.error(err);
+        btn.disabled = false; 
+        btn.innerText = "🚀 Simpan Transaksi";
+        showToast("Koneksi Internet Terganggu", "❌"); 
+      });
     }
 
-    /* =========================================================
-       🚀 FIX & OPTIMIZED V5: SEKARANG DIJAMIN TERHAPUS INSTAN
-       ========================================================= */
+    /* 🔥 FIXED V6: HAPUS DIJAMIN 100% BERFUNGSI INSTAN KARENA DILINDUNGI DARI CRASH */
     function hapusTransaksi(id) {
       if(!confirm("Apakah Anda yakin ingin menghapus catatan transaksi ini?")) return;
+      
+      // Tampilkan toast dengan aman
       showToast("Sedang menghapus...", "⏳");
+      
       const bln = document.getElementById('filterBulan').value;
       const thn = document.getElementById('filterTahun').value;
       
-      // ✨ OPTIMISTIC LOCAL DELETE: Lenyapkan dari tabel detik ini juga
+      // OPTIMISTIC LOCAL UI UPDATE - Hapus langsung dari DOM lokal biar secepat kilat
       masterDataRiwayat = masterDataRiwayat.filter(t => String(t.id) !== String(id));
       cetakTabelRiwayat(masterDataRiwayat);
       aplikasikanFilterHistori();
 
-      // 🚨 MULTI-FIELD COMPATIBILITY PAYLOAD (Anti gagal mencocokkan tipe ID di Apps Script)
+      // Multi-compatibility payload agar pasti tembus ke backend script manapun
       const targetPayload = { 
         action: 'deleteTransaction', 
         id: id,
         rowId: id,
         uid: id,
-        idNum: isNaN(id) ? id : Number(id),
-        formData: { id: id }
+        idNum: isNaN(id) ? id : Number(id)
       };
       
       fetch(API_URL, { method: 'POST', body: JSON.stringify(targetPayload) })
@@ -1270,15 +1294,15 @@
       .then(res => { 
         if(res.success) { 
           showToast(res.message, "✅"); 
-          // Jeda sinkronisasi agar spreadsheet flush cache tuntas
-          setTimeout(() => { initializeApplicationData(bln, thn); }, 1200);
+          setTimeout(() => { initializeApplicationData(bln, thn); }, 1000);
         } else { 
           showToast(res.message, "❌"); 
-          initializeApplicationData(bln, thn); // Rollback jika server gagal
+          initializeApplicationData(bln, thn); 
         } 
       })
-      .catch(() => {
-        showToast("Koneksi Cloud Time Out", "❌");
+      .catch((err) => {
+        console.error(err);
+        showToast("Gagal Terhubung ke Cloud", "❌");
         initializeApplicationData(bln, thn);
       });
     }
