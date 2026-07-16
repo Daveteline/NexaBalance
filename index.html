@@ -40,9 +40,7 @@
       scrollbar-color: #475569 transparent;
     }
 
-    /* =========================================================
-       PREMIUM UPGRADE V4: FORCE LIFT INTERACTION WITH !IMPORTANT
-       ========================================================= */
+    /* PREMIUM UPGRADE V4: FORCE LIFT INTERACTION WITH !IMPORTANT */
     .grid > div, 
     #tab-dashboard > div.rounded-2xl,
     #tab-comparison > div.rounded-2xl {
@@ -52,7 +50,6 @@
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
     }
 
-    /* Force Hover State - Mutlak mengangkat card meski sedang terkunci animasi panic */
     .grid > div:hover, 
     #tab-dashboard > div.rounded-2xl:hover,
     #tab-comparison > div.rounded-2xl:hover {
@@ -61,7 +58,6 @@
                   0 10px 22px -6px rgba(15, 23, 42, 0.22) !important;
     }
     
-    /* Force Hover State - Mode Gelap Ungu Neon intensitas tinggi */
     .dark .grid > div:hover, 
     .dark #tab-dashboard > div.rounded-2xl:hover, 
     .dark #tab-comparison > div.rounded-2xl:hover {
@@ -117,7 +113,7 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* 🚨 EXTRA MICROMOTION: ANIMAASI ALARM DARURAT */
+    /* 🚨 MICROMOTION STATE: ALARM ANGGARAN DARURAT */
     @keyframes shakePanic {
       0%, 100% { transform: translateX(0); }
       10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
@@ -209,7 +205,6 @@
 
       <div id="tab-dashboard" class="tab-content active space-y-6">
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 min-w-0">
-          
           <div id="cardBudget" class="bg-white dark:bg-slate-800 p-3 sm:p-4 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-xs flex flex-col justify-between col-span-2 lg:col-span-1">
             <div class="flex justify-between items-start w-full">
               <div>
@@ -675,7 +670,6 @@
       setTimeout(() => { toast.className = "fixed top-5 right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-xl flex items-center space-x-2 text-sm font-semibold"; }, 3000);
     }
 
-    // FUNGSI NAVIGASI INTERAKTIF TAB
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.getElementById(`tab-${tabName}`).classList.add('active');
@@ -724,6 +718,9 @@
       } else { container.classList.add('hidden'); }
     }
 
+    /* =========================================================
+       🚀 OPTIMIZED: FUNGSI UTAMA SINKRONISASI DATA SINGLE-STREAM
+       ========================================================= */
     function initializeApplicationData(bln, thn) {
       fetch(`${API_URL}?action=getInitialData&bulan=${bln}&tahun=${thn}`)
         .then(res => res.json())
@@ -785,10 +782,7 @@
       const bln = document.getElementById('filterBulan').value;
       const thn = document.getElementById('filterTahun').value;
       if(!thn) return;
-      fetch(`${API_URL}?action=getDashboardData&bulan=${bln}&tahun=${thn}`)
-        .then(res => res.json())
-        .then(renderDashboard)
-        .catch(err => console.error(err));
+      initializeApplicationData(bln, thn);
     }
 
     function saveManualBudget() {
@@ -798,7 +792,7 @@
       if(!nominal || nominal <= 0) { showToast("Masukkan nominal valid!", "❌"); return; }
       fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'updateBudget', bulan: bln, tahun: thn, nominal: nominal }) })
       .then(res => res.json())
-      .then(res => { if(res.success) { showToast(res.message, "✅"); loadDashboardData(); } });
+      .then(res => { if(res.success) { showToast(res.message, "✅"); initializeApplicationData(bln, thn); } });
     }
 
     function saveManualPaymentMethod() {
@@ -810,10 +804,9 @@
         if(res.success) {
           showToast(res.message, "✅");
           document.getElementById('inputMetodeBaru').value = '';
-          fetch(`${API_URL}?action=getPaymentMethods`).then(r => r.json()).then(list => {
-            const sel = document.getElementById('inputMetode'); sel.innerHTML = '';
-            list.forEach(m => { sel.innerHTML += `<option value="${m}">${m}</option>`; });
-          });
+          const bln = document.getElementById('filterBulan').value;
+          const thn = document.getElementById('filterTahun').value;
+          initializeApplicationData(bln, thn);
         } else { showToast(res.message, "❌"); }
       });
     }
@@ -921,14 +914,12 @@
       
       lblSisaBudget.innerText = formatRupiah(sisaBudget);
 
-      // RESET STATE ALARM DARURAT SEBELUM DI-CEK ULANG
       cardBudget.classList.remove('animate-shake-panic', 'glow-panic-light', 'dark:glow-panic-dark');
       barBudget.classList.remove('bg-red-500');
       barBudget.classList.add('bg-blue-600');
 
       if(sisaBudget < 0) {
         lblSisaBudget.className = "text-sm sm:text-base font-black text-red-600 mt-0.5 tracking-tight animate-pulse";
-        // AKTIFKAN LIVE PANIC FLASHING SHAKE
         cardBudget.classList.add('animate-shake-panic', 'glow-panic-light', 'dark:glow-panic-dark');
         barBudget.classList.remove('bg-blue-600');
         barBudget.classList.add('bg-red-500');
@@ -1132,16 +1123,7 @@
     }
 
     function loadFormOptionsAndLogs() {
-      fetch(`${API_URL}?action=getCategories`).then(res => res.json()).then(list => {
-        const sel = document.getElementById('inputKategori'); sel.innerHTML = '';
-        list.forEach(k => { sel.innerHTML += `<option value="${k}">${k}</option>`; });
-        renderCategoriesManagement(list);
-      });
-      fetch(`${API_URL}?action=getPaymentMethods`).then(res => res.json()).then(list => {
-        const sel = document.getElementById('inputMetode'); sel.innerHTML = '';
-        list.forEach(m => { sel.innerHTML += `<option value="${m}">${m}</option>`; });
-      });
-      fetch(`${API_URL}?action=getRecentTransactions`).then(res => res.json()).then(txs => { masterDataRiwayat = txs; cetakTabelRiwayat(txs); });
+      // Skrip pemuatan cadangan kompatibilitas internal
     }
 
     function cetakTabelRiwayat(dataArray) {
@@ -1164,6 +1146,7 @@
               <button onclick="siapkanEdit('${t.id}', '${t.tanggal}', '${t.user}', '${t.kategori}', ${t.jumlah}, '${escapedKet}', '${t.metode || 'Cash'}')" class="cursor-pointer inline-flex items-center justify-center w-7 h-7 bg-blue-500/10 hover:bg-blue-500 text-blue-500 hover:text-white dark:text-blue-400 dark:hover:text-white rounded-lg transition-all active:scale-90" title="Sunting">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
               </button>
+              
               <button onclick="hapusTransaksi('${t.id}')" class="cursor-pointer inline-flex items-center justify-center w-7 h-7 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white dark:text-red-400 dark:hover:text-white rounded-lg transition-all active:scale-90" title="Hapus">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
               </button>
@@ -1193,9 +1176,7 @@
       document.getElementById('btnBatalEdit').classList.remove('hidden');
       document.getElementById('inputTanggal').value = tanggal;
       document.getElementById('inputKategori').value = kategori;
-      
       document.getElementById('inputJumlah').value = new Intl.NumberFormat('id-ID').format(jumlah);
-      
       document.getElementById('inputKeterangan').value = keterangan;
       document.getElementById('inputMetode').value = metode || 'Cash';
       if(user === 'Harley') document.getElementById('radioHarley').checked = true; else document.getElementById('radioRachel').checked = true;
@@ -1211,10 +1192,15 @@
       document.getElementById('inputJumlah').value = ''; document.getElementById('inputKeterangan').value = ''; document.getElementById('inputTanggal').value = new Date().toISOString().split('T')[0];
     }
 
+    /* =========================================================
+       🚀 OPTIMIZED: PROSES INPUT TRANSAKSI LEBIH CEPAT (SINGLE CALL)
+       ========================================================= */
     function submitTransaksi(event) {
       event.preventDefault();
       const btn = document.getElementById('btnSimpan'); btn.disabled = true; btn.innerText = "⏳ Memproses...";
       const cleanJumlah = document.getElementById('inputJumlah').value.replace(/\./g, '');
+      const bln = document.getElementById('filterBulan').value;
+      const thn = document.getElementById('filterTahun').value;
 
       const formData = { 
         user: document.querySelector('input[name="user"]:checked').value, 
@@ -1227,17 +1213,37 @@
       
       fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: editModeId ? 'editTransaction' : 'addTransaction', id: editModeId, formData: formData }) })
       .then(res => res.json())
-      .then(res => { btn.disabled = false; if(res.success) { showToast(res.message, "✅"); resetFormState(); loadDashboardData(); loadFormOptionsAndLogs(); } else { showToast(res.message, "❌"); } })
+      .then(res => { 
+        btn.disabled = false; 
+        if(res.success) { 
+          showToast(res.message, "✅"); 
+          resetFormState(); 
+          initializeApplicationData(bln, thn); // Hanya memanggil 1 request terpadu
+        } else { showToast(res.message, "❌"); } 
+      })
       .catch(() => { btn.disabled = false; resetFormState(); showToast("Koneksi API Gagal", "❌"); });
     }
 
+    /* =========================================================
+       🚀 FIX & OPTIMIZED: SEKARANG ANTI MANDET & LANGSUNG TERHAPUS
+       ========================================================= */
     function hapusTransaksi(id) {
-      if(!confirm("Apakah Anda yakin?")) return;
+      if(!confirm("Apakah Anda yakin ingin menghapus catatan transaksi ini?")) return;
       showToast("Sedang menghapus...", "⏳");
+      const bln = document.getElementById('filterBulan').value;
+      const thn = document.getElementById('filterTahun').value;
+      
       fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteTransaction', id: id }) })
       .then(res => res.json())
-      .then(res => { if(res.success) { showToast(res.message, "✅"); loadDashboardData(); loadFormOptionsAndLogs(); } else { showToast(res.message, "❌"); } })
-      .catch(() => showToast("Koneksi API Gagal", "❌"));
+      .then(res => { 
+        if(res.success) { 
+          showToast(res.message, "✅"); 
+          initializeApplicationData(bln, thn); // Menarik data ulang dengan 1 request bersih
+        } else { 
+          showToast(res.message, "❌"); 
+        } 
+      })
+      .catch(() => showToast("Koneksi Cloud Time Out", "❌"));
     }
 
     function renderCategoriesManagement(list) {
@@ -1262,17 +1268,25 @@
         if(res.success) {
           showToast(res.message, "✅");
           document.getElementById('inputKategoriBaru').value = '';
-          loadFormOptionsAndLogs(); 
-          loadDashboardData(); 
+          const bln = document.getElementById('filterBulan').value;
+          const thn = document.getElementById('filterTahun').value;
+          initializeApplicationData(bln, thn); 
         } else { showToast(res.message, "❌"); }
       });
     }
 
     function deleteManualCategory(kategori) {
-      if(!confirm(`Hapus kategori "${kategori}"?\nTransaksi lama yang menggunakan kategori ini tidak akan hilang dari riwayat, tapi tidak bisa dipilih lagi untuk catatan baru.`)) return;
+      if(!confirm(`Hapus kategori "${kategori}"?\nTransaksi lama yang menggunakan kategori ini tidak akan hilang dari riwayat.`)) return;
       fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteCategory', kategori: kategori }) })
       .then(res => res.json())
-      .then(res => { if(res.success) { showToast(res.message, "✅"); loadFormOptionsAndLogs(); loadDashboardData(); } else { showToast(res.message, "❌"); } });
+      .then(res => {
+        if(res.success) { 
+          showToast(res.message, "✅"); 
+          const bln = document.getElementById('filterBulan').value;
+          const thn = document.getElementById('filterTahun').value;
+          initializeApplicationData(bln, thn);
+        } else { showToast(res.message, "❌"); }
+      });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -1283,7 +1297,6 @@
       document.getElementById('filterBulan').value = currentMonth;
       
       initializeApplicationData(currentMonth, currentYear);
-      loadFormOptionsAndLogs();
 
       const inputJumlah = document.getElementById('inputJumlah');
       if (inputJumlah) {
