@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Expense Tracker</title>
+  <!-- 1. PERBAIKAN TITLE UTAMA -->
+  <title>NexaBalance</title>
   
-  <!-- 👑 PREMIUM PWA UPGRADE: OFFICIAL NEXABALANCE SUITE -->
-  <link rel="manifest" href='data:application/manifest+json,{"name":"NexaBalance","short_name":"NexaBalance","description":"Premium Finance Hub by Harley & Rachel","start_url":".","display":"standalone","orientation":"portrait","background_color":"#0a0f1d","theme_color":"#0a0f1d","icons":[{"src":"https://www.dropbox.com/scl/fi/44ipjisn4kc62ts66ouus/NexaBalance_Logo_512x512.png?rlkey=xtsrxvpeb7z4lz008708aoo5w&st=jtbbdj8i&e=1&raw=1","sizes":"192x192","type":"image/png"},{"src":"https://www.dropbox.com/scl/fi/44ipjisn4kc62ts66ouus/NexaBalance_Logo_512x512.png?rlkey=xtsrxvpeb7z4lz008708aoo5w&st=jtbbdj8i&e=1&raw=1","sizes":"512x512","type":"image/png"}]}'>
+  <!-- 2. INLINE MANIFEST YANG SUDAH DI-URL ENCODE (ANTI-CRASH CHROME) -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22NexaBalance%22%2C%22short_name%22%3A%22NexaBalance%22%2C%22description%22%3A%22Premium%20Finance%20Hub%20by%20Harley%20Rachel%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%230a0f1d%22%2C%22theme_color%22%3A%22%230a0f1d%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2F44ipjisn4kc62ts66ouus%2FNexaBalance_Logo_512x512.png%3Frlkey%3Dxtsrxvpeb7z4lz008708aoo5w%26st%3Djtbbdj8i%26e%3D1%26raw%3D1%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fwww.dropbox.com%2Fscl%2Ffi%2F44ipjisn4kc62ts66ouus%2FNexaBalance_Logo_512x512.png%3Frlkey%3Dxtsrxvpeb7z4lz008708aoo5w%26st%3Djtbbdj8i%26e%3D1%26raw%3D1%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
   <meta name="theme-color" content="#0a0f1d">
 
+  <!-- 3. LINK IKON ASET UTAMA -->
   <link rel="icon" type="image/png" sizes="192x192" href="https://www.dropbox.com/scl/fi/44ipjisn4kc62ts66ouus/NexaBalance_Logo_512x512.png?rlkey=xtsrxvpeb7z4lz008708aoo5w&st=jtbbdj8i&e=1&raw=1">
   <link rel="apple-touch-icon" sizes="180x180" href="https://www.dropbox.com/scl/fi/44ipjisn4kc62ts66ouus/NexaBalance_Logo_512x512.png?rlkey=xtsrxvpeb7z4lz008708aoo5w&st=jtbbdj8i&e=1&raw=1">
 
-  <meta name="apple-mobile-web-app-title" content="Expense Tracker">
+  <!-- 4. PERBAIKAN FALLBACK IDENTITAS APPLE -->
+  <meta name="apple-mobile-web-app-title" content="NexaBalance">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
