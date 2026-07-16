@@ -718,9 +718,6 @@
       } else { container.classList.add('hidden'); }
     }
 
-    /* =========================================================
-       🚀 OPTIMIZED: FUNGSI UTAMA SINKRONISASI DATA SINGLE-STREAM
-       ========================================================= */
     function initializeApplicationData(bln, thn) {
       fetch(`${API_URL}?action=getInitialData&bulan=${bln}&tahun=${thn}`)
         .then(res => res.json())
@@ -1122,9 +1119,7 @@
       });
     }
 
-    function loadFormOptionsAndLogs() {
-      // Skrip pemuatan cadangan kompatibilitas internal
-    }
+    function loadFormOptionsAndLogs() {}
 
     function cetakTabelRiwayat(dataArray) {
       const tbody = document.getElementById('tabelRiwayat'); tbody.innerHTML = '';
@@ -1193,7 +1188,7 @@
     }
 
     /* =========================================================
-       🚀 OPTIMIZED: PROSES INPUT TRANSAKSI LEBIH CEPAT (SINGLE CALL)
+       🚀 OPTIMIZED V5: INPUT INSTAN & DIJAMIN LANGSUNG MUNCUL
        ========================================================= */
     function submitTransaksi(event) {
       event.preventDefault();
@@ -1217,15 +1212,37 @@
         btn.disabled = false; 
         if(res.success) { 
           showToast(res.message, "✅"); 
+          
+          // ✨ OPTIMISTIC UI UPDATE: Suntik langsung ke DOM lokal secara instan
+          const localTx = {
+            id: editModeId || res.id || ("tmp_" + Date.now()),
+            tanggal: formData.tanggal,
+            user: formData.user,
+            kategori: formData.kategori,
+            jumlah: parseInt(formData.jumlah),
+            keterangan: formData.keterangan,
+            metode: formData.metode
+          };
+          
+          if (editModeId) {
+            masterDataRiwayat = masterDataRiwayat.map(t => (String(t.id) === String(editModeId)) ? localTx : t);
+          } else {
+            masterDataRiwayat.unshift(localTx);
+          }
+          
+          cetakTabelRiwayat(masterDataRiwayat);
+          aplikasikanFilterHistori();
           resetFormState(); 
-          initializeApplicationData(bln, thn); // Hanya memanggil 1 request terpadu
+          
+          // Jeda aman 1200ms sebelum sync statistik agar spreadsheet cloud selesai memproses data
+          setTimeout(() => { initializeApplicationData(bln, thn); }, 1200);
         } else { showToast(res.message, "❌"); } 
       })
-      .catch(() => { btn.disabled = false; resetFormState(); showToast("Koneksi API Gagal", "❌"); });
+      .catch(() => { btn.disabled = false; showToast("Koneksi API Gagal", "❌"); });
     }
 
     /* =========================================================
-       🚀 FIX & OPTIMIZED: SEKARANG ANTI MANDET & LANGSUNG TERHAPUS
+       🚀 FIX & OPTIMIZED V5: SEKARANG DIJAMIN TERHAPUS INSTAN
        ========================================================= */
     function hapusTransaksi(id) {
       if(!confirm("Apakah Anda yakin ingin menghapus catatan transaksi ini?")) return;
@@ -1233,17 +1250,37 @@
       const bln = document.getElementById('filterBulan').value;
       const thn = document.getElementById('filterTahun').value;
       
-      fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteTransaction', id: id }) })
+      // ✨ OPTIMISTIC LOCAL DELETE: Lenyapkan dari tabel detik ini juga
+      masterDataRiwayat = masterDataRiwayat.filter(t => String(t.id) !== String(id));
+      cetakTabelRiwayat(masterDataRiwayat);
+      aplikasikanFilterHistori();
+
+      // 🚨 MULTI-FIELD COMPATIBILITY PAYLOAD (Anti gagal mencocokkan tipe ID di Apps Script)
+      const targetPayload = { 
+        action: 'deleteTransaction', 
+        id: id,
+        rowId: id,
+        uid: id,
+        idNum: isNaN(id) ? id : Number(id),
+        formData: { id: id }
+      };
+      
+      fetch(API_URL, { method: 'POST', body: JSON.stringify(targetPayload) })
       .then(res => res.json())
       .then(res => { 
         if(res.success) { 
           showToast(res.message, "✅"); 
-          initializeApplicationData(bln, thn); // Menarik data ulang dengan 1 request bersih
+          // Jeda sinkronisasi agar spreadsheet flush cache tuntas
+          setTimeout(() => { initializeApplicationData(bln, thn); }, 1200);
         } else { 
           showToast(res.message, "❌"); 
+          initializeApplicationData(bln, thn); // Rollback jika server gagal
         } 
       })
-      .catch(() => showToast("Koneksi Cloud Time Out", "❌"));
+      .catch(() => {
+        showToast("Koneksi Cloud Time Out", "❌");
+        initializeApplicationData(bln, thn);
+      });
     }
 
     function renderCategoriesManagement(list) {
