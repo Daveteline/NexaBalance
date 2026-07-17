@@ -7,8 +7,11 @@
   
   <!-- 👑 HANCURKAN CACHE DENGAN FILE WEBMANIFEST BARU -->
   <link rel="manifest" href="nexabalance.webmanifest">
-  <meta name="theme-color" content="#0a0f1d">
+  
+  <!-- 🚀 TAG THEME COLOR SEKARANG PUNYA ID (UNTUK DIUBAH INTERAKTIF) -->
+  <meta name="theme-color" id="nav-theme-color" content="#ffffff">
 
+  <!-- 🔁 LINK LOGO BARU YANG SUDAH DIPERBARUI -->
   <link rel="icon" type="image/png" sizes="192x192" href="https://www.dropbox.com/scl/fi/g0svzan89czv832ew2w98/NexaBalance_Logo_512x512.png?rlkey=t5ms86v66e17enn0espbbn41u&st=bqxi7w6d&raw=1">
   <link rel="apple-touch-icon" sizes="180x180" href="https://www.dropbox.com/scl/fi/g0svzan89czv832ew2w98/NexaBalance_Logo_512x512.png?rlkey=t5ms86v66e17enn0espbbn41u&st=bqxi7w6d&raw=1">
 
@@ -30,21 +33,22 @@
     @custom-variant dark (&:where(.dark, .dark *));
   </style>
 
-  <!-- INLINE ANTI-FLASH (WAJIB DI HEAD BIAR DARK MODE GAK KEDIP PUTIH) -->
+  <!-- ⚡ ENGINE ANTI-FLASH TIDAK KEMBAR & OTOMATIS RAMAH STATUS BAR SEJAK LOADING -->
   <script>
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  </script>
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
 
-  <!-- INLINE ANTI-FLASH (WAJIB DI HEAD BIAR DARK MODE GAK KEDIP PUTIH) -->
-  <script>
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (isDark) {
       document.documentElement.classList.add('dark');
+      window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('nav-theme-color').setAttribute('content', '#0a0f1d');
+      });
     } else {
       document.documentElement.classList.remove('dark');
+      window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('nav-theme-color').setAttribute('content', '#ffffff');
+      });
     }
   </script>
 </head>
