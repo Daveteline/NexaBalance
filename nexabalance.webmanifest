@@ -7,7 +7,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "theme_color": "#f8fafc",
   "icons": [
     {
       "src": "https://www.dropbox.com/scl/fi/g0svzan89czv832ew2w98/NexaBalance_Logo_512x512.png?rlkey=t5ms86v66e17enn0espbbn41u&st=bqxi7w6d&raw=1",
