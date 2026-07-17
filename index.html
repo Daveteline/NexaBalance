@@ -32,8 +32,8 @@
   <style type="text/tailwindcss">
     @custom-variant dark (&:where(.dark, .dark *));
   </style>
-
-  <!-- ⚡ ENGINE ANTI-FLASH: WARNA SUDAH DIKONCI SAMA PERSIS DENGAN KELAS BACKGROUND TAILWIND -->
+  
+  <!-- ⚡ ENGINE ANTI-FLASH INSTAN: DIEKSEKUSI SEBELUM BROWSER SEMPAT MENGGAMBAR FRAME PERTAMA -->
   <script>
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -41,18 +41,15 @@
 
     if (isDark) {
       document.documentElement.classList.add('dark');
-      window.addEventListener('DOMContentLoaded', () => {
-        // 🎯 DISAMAKAN: Pakai #0f172a agar menyatu total dengan dark:bg-slate-900
-        document.getElementById('nav-theme-color').setAttribute('content', '#0f172a');
-      });
+      // Tembak langsung secara native tanpa menunggu DOM loaded
+      document.getElementById('nav-theme-color').setAttribute('content', '#0f172a');
     } else {
       document.documentElement.classList.remove('dark');
-      window.addEventListener('DOMContentLoaded', () => {
-        // 🎯 DISAMAKAN: Pakai #f8fafc agar menyatu total dengan bg-[#f8fafc]
-        document.getElementById('nav-theme-color').setAttribute('content', '#f8fafc');
-      });
+      // Langsung paksa jadi abu terang bawaan dashboard sejak milidetik pertama
+      document.getElementById('nav-theme-color').setAttribute('content', '#f8fafc');
     }
   </script>
+</head>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 dark:bg-slate-900 dark:text-slate-100">
 
