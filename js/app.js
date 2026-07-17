@@ -14,10 +14,11 @@ function toggleDarkMode() {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   updateDarkModeButton(isDark);
   
+  // 🚀 SEAMLESS LOCK: Paksa warna status bar melebur sempurna tanpa garis pembatas
   const metaTheme = document.getElementById('nav-theme-color');
   if (metaTheme) {
-    // Mode gelap pakai #0a0f1d, mode terang pakai #ffffff (mengikuti background dashboard)
-    metaTheme.setAttribute('content', isDark ? '#0a0f1d' : '#ffffff');
+    // #0f172a untuk menyatu dengan slate-900, #f8fafc untuk abu terang
+    metaTheme.setAttribute('content', isDark ? '#0f172a' : '#f8fafc');
   }
   
   loadDashboardData(); 
