@@ -1,0 +1,122 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Custom Sleek Dark Scrollbar Global & Containers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #475569 transparent;
+}
+
+html, body { 
+  margin: 0; 
+  padding: 0; 
+  width: 100%; 
+  height: 100%; 
+  transition: background-color 0.3s ease; 
+}
+body { 
+  font-family: 'Inter', sans-serif; 
+}
+.tab-content { 
+  display: none; 
+}
+.tab-content.active { 
+  display: block; 
+}
+
+/* PREMIUM UPGRADE V4: FORCE LIFT INTERACTION */
+.grid > div, 
+#tab-dashboard > div.rounded-2xl,
+#tab-comparison > div.rounded-2xl {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.3s ease, 
+              border-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.grid > div:hover, 
+#tab-dashboard > div.rounded-2xl:hover,
+#tab-comparison > div.rounded-2xl:hover {
+  transform: translateY(-8px) !important; 
+  box-shadow: 0 22px 35px -5px rgba(59, 130, 246, 0.25), 
+              0 10px 22px -6px rgba(15, 23, 42, 0.22) !important;
+}
+
+.dark .grid > div:hover, 
+.dark #tab-dashboard > div.rounded-2xl:hover, 
+.dark #tab-comparison > div.rounded-2xl:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 25px 45px -5px rgba(0, 0, 0, 0.8), 
+              0 0 28px 6px rgba(99, 102, 241, 0.45) !important;
+  border-color: rgba(99, 102, 241, 0.7) !important;
+}
+
+#formTransaksi label.cursor-pointer {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#formTransaksi label.cursor-pointer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.22);
+}
+
+.dark #formTransaksi label.cursor-pointer:hover {
+  box-shadow: 0 8px 22px rgba(99, 102, 241, 0.45);
+  border-color: rgba(99, 102, 241, 0.6) !important;
+}
+
+#formTransaksi label.cursor-pointer:active {
+  transform: translateY(1px) scale(0.96);
+}
+
+button:not(#btnBurger), input[type="submit"] {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:not(#btnBurger):hover, input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.38);
+}
+
+.dark button:not(#btnBurger):hover, .dark input[type="submit"]:hover {
+  box-shadow: 0 8px 25px -2px rgba(99, 102, 241, 0.65);
+}
+
+button:not(#btnBurger):active, input[type="submit"]:active {
+  transform: translateY(0.5px) scale(0.96);
+}
+
+#btnSimpan:hover, #btn-generate-ai:hover {
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.8) !important;
+}
+
+/* 🚨 MICROMOTION STATE: ALARM ANGGARAN DARURAT */
+@keyframes shakePanic {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+.animate-shake-panic {
+  animation: shakePanic 0.6s cubic-bezier(.36,.07,.19,.97) both;
+}
+.glow-panic-light {
+  box-shadow: 0 0 22px rgba(239, 68, 68, 0.45) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+.glow-panic-dark {
+  box-shadow: 0 0 32px rgba(239, 68, 68, 0.75), 0 12px 24px rgba(0,0,0,0.5) !important;
+  border-color: rgba(239, 68, 68, 0.8) !important;
+}
