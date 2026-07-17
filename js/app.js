@@ -599,6 +599,9 @@ function deleteManualCategory(kategori) {
 
 document.addEventListener('DOMContentLoaded', function() {
   updateDarkModeButton(document.documentElement.classList.contains('dark'));
+  
+  document.getElementById('inputTanggal').value = new Date().toISOString().split('T')[0];
+
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentYear = currentDate.getFullYear();
