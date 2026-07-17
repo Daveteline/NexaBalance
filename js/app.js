@@ -13,6 +13,13 @@ function toggleDarkMode() {
   const isDark = document.documentElement.classList.toggle('dark');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   updateDarkModeButton(isDark);
+  
+  const metaTheme = document.getElementById('nav-theme-color');
+  if (metaTheme) {
+    // Mode gelap pakai #0a0f1d, mode terang pakai #ffffff (mengikuti background dashboard)
+    metaTheme.setAttribute('content', isDark ? '#0a0f1d' : '#ffffff');
+  }
+  
   loadDashboardData(); 
 }
 
